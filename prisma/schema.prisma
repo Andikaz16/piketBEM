@@ -1,0 +1,64 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Kementerian {
+  id        Int       @id @default(autoincrement())
+  nama      String    @unique
+  createdAt DateTime  @default(now()) @map("created_at")
+  anggota   Anggota[]
+  jadwal    JadwalPiket[]
+
+  @@map("kementerian")
+}
+
+model Anggota {
+  id             Int          @id @default(autoincrement())
+  namaLengkap    String       @map("nama_lengkap")
+  jabatan        String
+  kementerianId  Int          @map("kementerian_id")
+  kementerian    Kementerian  @relation(fields: [kementerianId], references: [id], onDelete: Cascade)
+  absensi        Absensi[]
+  createdAt      DateTime     @default(now()) @map("created_at")
+
+  @@map("anggota")
+}
+
+model Absensi {
+  id            Int      @id @default(autoincrement())
+  anggotaId     Int      @map("anggota_id")
+  anggota       Anggota  @relation(fields: [anggotaId], references: [id], onDelete: Cascade)
+  tanggal       DateTime @default(now())
+  jamMasuk      String   @map("jam_masuk")
+  fotoSelfie    String   @map("foto_selfie")
+  fotoKegiatan  String   @map("foto_kegiatan")
+  keterangan    String?  @db.Text
+  createdAt     DateTime @default(now()) @map("created_at")
+
+  @@map("absensi")
+}
+
+model JadwalPiket {
+  id             Int          @id @default(autoincrement())
+  kementerianId  Int          @map("kementerian_id")
+  kementerian    Kementerian  @relation(fields: [kementerianId], references: [id], onDelete: Cascade)
+  hari           String
+  createdAt      DateTime     @default(now()) @map("created_at")
+
+  @@unique([kementerianId, hari])
+  @@map("jadwal_piket")
+}
+
+model Admin {
+  id       Int    @id @default(autoincrement())
+  username String @unique
+  password String
+  nama     String
+
+  @@map("admin")
+}
