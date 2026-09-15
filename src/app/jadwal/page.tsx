@@ -28,7 +28,6 @@ export default function JadwalPublicPage() {
         if (Array.isArray(data)) {
           setJadwal(data);
         } else {
-          console.error('Data jadwal bukan array:', data);
           setJadwal([]);
         }
       })
@@ -45,69 +44,72 @@ export default function JadwalPublicPage() {
   return (
     <>
       <Navbar />
-      <main className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+      <main className="min-h-screen bg-dark-950 py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-12">
-            <div className="bg-blue-100 w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-sm">
-              <CalendarDays className="h-8 w-8 text-blue-600" />
-            </div>
-            <h1 className="text-3xl font-bold text-gray-900 sm:text-4xl">Jadwal Piket BEM UMS</h1>
-            <p className="mt-4 text-lg text-gray-600 max-w-2xl mx-auto">
+          {/* Header */}
+          <div className="text-center mb-14">
+            <h1 className="text-4xl sm:text-5xl font-heading font-bold text-white uppercase tracking-tight">
+              Jadwal Piket
+            </h1>
+            <div className="w-20 h-1 bg-red-600 mx-auto mt-4 rounded-full" />
+            <p className="mt-6 text-lg text-gray-400 max-w-2xl mx-auto">
               Daftar fungsionaris yang bertugas piket kebersihan sekretariat setiap harinya.
             </p>
           </div>
 
           {loading ? (
             <div className="flex justify-center items-center h-64">
-              <Loader2 className="h-10 w-10 animate-spin text-blue-600" />
+              <Loader2 className="h-10 w-10 animate-spin text-red-500" />
             </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-5">
               {HARI_LIST.map((hari) => {
                 const items = getJadwalByHari(hari);
                 return (
-                  <div key={hari} className="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden flex flex-col h-full hover:shadow-md transition-shadow">
-                    <div className="bg-blue-600 px-4 py-4 text-center">
-                      <h2 className="text-xl font-bold text-white">{hari}</h2>
-                      <p className="text-blue-100 text-sm mt-1">{items.length} Fungsionaris</p>
+                  <div key={hari} className="bg-dark-900/60 backdrop-blur-sm rounded-2xl border border-white/5 overflow-hidden flex flex-col h-full hover:border-red-600/30 transition-all">
+                    {/* Day Header */}
+                    <div className="bg-gradient-to-r from-red-700 to-red-600 px-4 py-4 text-center">
+                      <h2 className="text-xl font-heading font-bold text-white uppercase tracking-wider">{hari}</h2>
+                      <p className="text-red-100/80 text-xs mt-1 font-semibold uppercase tracking-widest">{items.length} Fungsionaris</p>
                     </div>
                     
-                    <div className="p-4 flex-1 space-y-3 bg-gray-50/50">
+                    {/* Members */}
+                    <div className="p-3 flex-1 space-y-2">
                       {items.length === 0 ? (
-                        <p className="text-gray-400 text-center py-8 text-sm">Belum ada jadwal</p>
+                        <p className="text-gray-600 text-center py-8 text-sm">Belum ada jadwal</p>
                       ) : (
                         items.map((item) => (
                           <div 
                             key={item.id}
-                            className={`flex flex-col p-3 rounded-xl border bg-white ${
+                            className={`flex flex-col p-3 rounded-xl border ${
                               item.isKoordinator 
-                                ? 'border-blue-200 shadow-sm ring-1 ring-blue-50' 
-                                : 'border-gray-100'
+                                ? 'bg-red-600/10 border-red-600/20' 
+                                : 'bg-white/[0.03] border-white/5'
                             }`}
                           >
                             <div className="flex items-start gap-2.5">
                               {item.isKoordinator ? (
-                                <div className="bg-blue-100 p-1.5 rounded-lg shrink-0 mt-0.5">
-                                  <Star className="h-4 w-4 text-blue-600" />
+                                <div className="bg-red-600/20 p-1.5 rounded-lg shrink-0 mt-0.5">
+                                  <Star className="h-3.5 w-3.5 text-red-400" />
                                 </div>
                               ) : (
-                                <div className="bg-gray-100 p-1.5 rounded-lg shrink-0 mt-0.5">
-                                  <User className="h-4 w-4 text-gray-500" />
+                                <div className="bg-white/5 p-1.5 rounded-lg shrink-0 mt-0.5">
+                                  <User className="h-3.5 w-3.5 text-gray-500" />
                                 </div>
                               )}
-                              <div>
-                                <h3 className={`font-semibold leading-tight ${
-                                  item.isKoordinator ? 'text-blue-900' : 'text-gray-900'
+                              <div className="min-w-0">
+                                <h3 className={`font-semibold leading-tight text-sm ${
+                                  item.isKoordinator ? 'text-red-300' : 'text-gray-200'
                                 }`}>
                                   {item.anggota.namaLengkap}
                                 </h3>
                                 <div className="mt-1 space-y-0.5">
                                   {item.isKoordinator && (
-                                    <span className="inline-block px-2 py-0.5 bg-blue-100 text-blue-700 text-[10px] font-bold uppercase tracking-wider rounded-md mb-1">
+                                    <span className="inline-block px-2 py-0.5 bg-red-600/20 text-red-400 text-[10px] font-bold uppercase tracking-wider rounded-md">
                                       Koordinator
                                     </span>
                                   )}
-                                  <p className="text-xs text-gray-500">
+                                  <p className="text-[11px] text-gray-500">
                                     {item.anggota.kementerian.nama}
                                   </p>
                                 </div>

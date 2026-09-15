@@ -101,13 +101,11 @@ export default function AbsenPage() {
     setLoading(true);
 
     try {
-      // Upload photos
       const [selfieUrl, kegiatanUrl] = await Promise.all([
         uploadFile(fotoSelfie, 'selfie'),
         uploadFile(fotoKegiatan, 'kegiatan'),
       ]);
 
-      // Submit attendance
       const res = await fetch('/api/absensi', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -137,13 +135,13 @@ export default function AbsenPage() {
     return (
       <>
         <Navbar />
-        <main className="min-h-screen bg-gray-50 flex items-center justify-center px-4">
-          <div className="bg-white rounded-2xl border border-gray-200 p-8 max-w-md w-full text-center shadow-sm">
-            <div className="bg-green-50 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-              <CheckCircle2 className="h-8 w-8 text-green-600" />
+        <main className="min-h-screen bg-dark-950 flex items-center justify-center px-4">
+          <div className="bg-dark-900/60 backdrop-blur-sm rounded-2xl border border-white/5 p-8 max-w-md w-full text-center">
+            <div className="bg-green-600/20 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+              <CheckCircle2 className="h-8 w-8 text-green-400" />
             </div>
-            <h2 className="text-2xl font-bold text-gray-900 mb-2">Absensi Berhasil!</h2>
-            <p className="text-gray-600 mb-6">
+            <h2 className="text-2xl font-heading font-bold text-white uppercase mb-2">Absensi Berhasil!</h2>
+            <p className="text-gray-400 mb-6">
               Data kehadiran piket Anda telah berhasil dicatat. Terima kasih atas kontribusinya.
             </p>
             <button
@@ -155,7 +153,7 @@ export default function AbsenPage() {
                 setFotoKegiatan(null);
                 setKeterangan('');
               }}
-              className="bg-blue-600 text-white px-6 py-2.5 rounded-xl font-medium hover:bg-blue-700 transition-colors"
+              className="bg-red-600 text-white px-6 py-2.5 rounded-xl font-bold uppercase tracking-wide hover:bg-red-700 transition-colors"
             >
               Absen Lagi
             </button>
@@ -168,36 +166,34 @@ export default function AbsenPage() {
   return (
     <>
       <Navbar />
-      <main className="min-h-screen bg-gray-50 py-8 px-4">
+      <main className="min-h-screen bg-dark-950 py-8 px-4">
         <div className="max-w-lg mx-auto">
           {/* Header */}
           <div className="text-center mb-8">
-            <div className="bg-blue-50 w-14 h-14 rounded-xl flex items-center justify-center mx-auto mb-4">
-              <ClipboardCheck className="h-7 w-7 text-blue-600" />
-            </div>
-            <h1 className="text-2xl font-bold text-gray-900">Form Absensi Piket</h1>
-            <p className="text-gray-500 mt-1">Isi data kehadiran piket Anda</p>
+            <h1 className="text-3xl font-heading font-bold text-white uppercase tracking-tight">Form Absensi Piket</h1>
+            <div className="w-16 h-1 bg-red-600 mx-auto mt-3 rounded-full" />
+            <p className="text-gray-400 mt-4">Isi data kehadiran piket Anda</p>
           </div>
 
           {/* Form */}
-          <form onSubmit={handleSubmit} className="bg-white rounded-2xl border border-gray-200 p-6 shadow-sm space-y-5">
+          <form onSubmit={handleSubmit} className="bg-dark-900/60 backdrop-blur-sm rounded-2xl border border-white/5 p-6 space-y-5">
             {error && (
-              <div className="bg-red-50 border border-red-200 rounded-xl px-4 py-3 flex items-start gap-3">
-                <AlertCircle className="h-5 w-5 text-red-500 mt-0.5 shrink-0" />
-                <span className="text-sm text-red-700">{error}</span>
+              <div className="bg-red-600/10 border border-red-600/20 rounded-xl px-4 py-3 flex items-start gap-3">
+                <AlertCircle className="h-5 w-5 text-red-400 mt-0.5 shrink-0" />
+                <span className="text-sm text-red-300">{error}</span>
               </div>
             )}
 
             {/* Kementerian */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1.5">
+              <label className="block text-sm font-semibold text-gray-300 mb-1.5 uppercase tracking-wide">
                 Kementerian <span className="text-red-500">*</span>
               </label>
               <div className="relative">
                 <select
                   value={selectedKementerian}
                   onChange={(e) => setSelectedKementerian(e.target.value)}
-                  className="w-full appearance-none bg-white border border-gray-300 rounded-xl px-4 py-3 pr-10 text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full appearance-none bg-dark-800 border border-white/10 rounded-xl px-4 py-3 pr-10 text-white focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
                   disabled={loadingData}
                 >
                   <option value="">Pilih Kementerian</option>
@@ -207,20 +203,20 @@ export default function AbsenPage() {
                     </option>
                   ))}
                 </select>
-                <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400 pointer-events-none" />
+                <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-500 pointer-events-none" />
               </div>
             </div>
 
             {/* Anggota */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1.5">
+              <label className="block text-sm font-semibold text-gray-300 mb-1.5 uppercase tracking-wide">
                 Nama <span className="text-red-500">*</span>
               </label>
               <div className="relative">
                 <select
                   value={selectedAnggota}
                   onChange={(e) => setSelectedAnggota(e.target.value)}
-                  className="w-full appearance-none bg-white border border-gray-300 rounded-xl px-4 py-3 pr-10 text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full appearance-none bg-dark-800 border border-white/10 rounded-xl px-4 py-3 pr-10 text-white focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
                   disabled={!selectedKementerian}
                 >
                   <option value="">Pilih Nama</option>
@@ -230,7 +226,7 @@ export default function AbsenPage() {
                     </option>
                   ))}
                 </select>
-                <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400 pointer-events-none" />
+                <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-500 pointer-events-none" />
               </div>
             </div>
 
@@ -242,7 +238,7 @@ export default function AbsenPage() {
 
             {/* Keterangan */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1.5">
+              <label className="block text-sm font-semibold text-gray-300 mb-1.5 uppercase tracking-wide">
                 Keterangan (Opsional)
               </label>
               <textarea
@@ -250,7 +246,7 @@ export default function AbsenPage() {
                 onChange={(e) => setKeterangan(e.target.value)}
                 rows={3}
                 placeholder="Tuliskan kegiatan yang dilakukan..."
-                className="w-full border border-gray-300 rounded-xl px-4 py-3 text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
+                className="w-full bg-dark-800 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent resize-none"
               />
             </div>
 
@@ -258,7 +254,7 @@ export default function AbsenPage() {
             <button
               type="submit"
               disabled={loading || !selectedAnggota || !fotoSelfie || !fotoKegiatan}
-              className="w-full bg-blue-600 text-white py-3 rounded-xl font-semibold hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+              className="w-full bg-red-600 text-white py-3.5 rounded-xl font-bold uppercase tracking-wide hover:bg-red-700 transition-all disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center gap-2 shadow-lg shadow-red-600/20"
             >
               {loading ? (
                 <>

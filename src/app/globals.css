@@ -2,9 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700;800&display=swap');
+
 :root {
-  --foreground: #111827;
-  --background: #f9fafb;
+  --foreground: #f1f5f9;
+  --background: #0f172a;
 }
 
 body {
@@ -13,48 +15,41 @@ body {
   font-family: 'Inter', sans-serif;
 }
 
-/* QR Scanner Styling Override */
-#qr-reader {
-  border: none !important;
-}
-
-#qr-reader__scan_region {
-  min-height: 250px;
-}
-
-#qr-reader__dashboard_section_csr button {
-  background-color: #2563eb !important;
-  color: white !important;
-  border: none !important;
-  padding: 8px 16px !important;
-  border-radius: 8px !important;
-  cursor: pointer !important;
-  font-size: 14px !important;
-}
-
-#qr-reader__dashboard_section_csr button:hover {
-  background-color: #1d4ed8 !important;
-}
-
-#qr-reader__dashboard_section_swaplink {
-  color: #2563eb !important;
-  text-decoration: underline !important;
-}
-
 /* Custom scrollbar */
 ::-webkit-scrollbar {
   width: 6px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #f1f5f9;
+  background: #1e293b;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #94a3b8;
+  background: #dc2626;
   border-radius: 3px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #64748b;
+  background: #ef4444;
+}
+
+/* Red glow animation */
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 20px rgba(220, 38, 38, 0.3); }
+  50% { box-shadow: 0 0 40px rgba(220, 38, 38, 0.6); }
+}
+
+.glow-red {
+  animation: pulse-glow 3s ease-in-out infinite;
+}
+
+/* Subtle grain texture overlay */
+.grain-overlay::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: 0.03;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 1;
 }
