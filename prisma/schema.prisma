@@ -3,7 +3,7 @@ generator client {
 }
 
 datasource db {
-  provider = "mysql"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
@@ -37,7 +37,7 @@ model Absensi {
   jamMasuk      String   @map("jam_masuk")
   fotoSelfie    String   @map("foto_selfie")
   fotoKegiatan  String   @map("foto_kegiatan")
-  keterangan    String?  @db.Text
+  keterangan    String?
   createdAt     DateTime @default(now()) @map("created_at")
 
   @@map("absensi")
