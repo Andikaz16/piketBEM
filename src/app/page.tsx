@@ -32,13 +32,6 @@ export default function Home() {
                   Mulai Absen
                   <ArrowRight className="h-5 w-5" />
                 </Link>
-                <Link
-                  href="/scan"
-                  className="inline-flex items-center justify-center gap-2 bg-white text-gray-700 px-8 py-3 rounded-xl text-lg font-semibold border-2 border-gray-200 hover:border-blue-300 hover:text-blue-600 transition-colors"
-                >
-                  <QrCode className="h-5 w-5" />
-                  Scan QR Code
-                </Link>
               </div>
             </div>
           </div>

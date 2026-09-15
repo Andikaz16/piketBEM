@@ -25,9 +25,6 @@ export default function Navbar() {
             <Link href="/absen" className="text-gray-600 hover:text-blue-600 transition-colors font-medium">
               Absen
             </Link>
-            <Link href="/scan" className="text-gray-600 hover:text-blue-600 transition-colors font-medium">
-              Scan QR
-            </Link>
             <Link
               href="/admin/login"
               className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors font-medium"
@@ -63,13 +60,6 @@ export default function Navbar() {
               onClick={() => setIsOpen(false)}
             >
               Absen
-            </Link>
-            <Link
-              href="/scan"
-              className="block px-3 py-2 rounded-lg text-gray-600 hover:bg-gray-50 hover:text-blue-600 font-medium"
-              onClick={() => setIsOpen(false)}
-            >
-              Scan QR
             </Link>
             <Link
               href="/admin/login"
