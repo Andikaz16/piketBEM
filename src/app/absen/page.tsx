@@ -135,7 +135,7 @@ export default function AbsenPage() {
     return (
       <>
         <Navbar />
-        <main className="min-h-screen bg-dark-950 flex items-center justify-center px-4">
+        <main className="min-h-screen flex items-center justify-center px-4">
           <div className="bg-dark-900/60 backdrop-blur-sm rounded-2xl border border-white/5 p-8 max-w-md w-full text-center">
             <div className="bg-green-600/20 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
               <CheckCircle2 className="h-8 w-8 text-green-400" />
@@ -166,7 +166,7 @@ export default function AbsenPage() {
   return (
     <>
       <Navbar />
-      <main className="min-h-screen bg-dark-950 py-8 px-4">
+      <main className="min-h-screen py-8 px-4">
         <div className="max-w-lg mx-auto">
           {/* Header */}
           <div className="text-center mb-8">

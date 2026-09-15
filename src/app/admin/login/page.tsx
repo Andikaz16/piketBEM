@@ -47,7 +47,7 @@ export default function AdminLoginPage() {
         {/* Logo */}
         <div className="text-center mb-8">
           <div className="flex justify-center mb-4">
-            <Image src="/logo-kolektiva.png" alt="Logo Kolektiva" width={80} height={80} className="h-16 w-auto" />
+            <Image src="/logo-kolektiva.png" alt="Logo Kolektiva" width={800} height={300} className="h-16 w-auto" unoptimized />
           </div>
           <h1 className="text-3xl font-heading font-bold text-white uppercase tracking-tight">Admin Login</h1>
           <div className="w-12 h-1 bg-red-600 mx-auto mt-3 rounded-full" />

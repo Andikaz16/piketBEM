@@ -11,8 +11,10 @@
 
 body {
   color: var(--foreground);
-  background-color: var(--background);
+  background: linear-gradient(135deg, #000000 0%, #450a0a 50%, #000000 100%);
+  background-attachment: fixed;
   font-family: 'Inter', sans-serif;
+  min-height: 100vh;
 }
 
 /* Custom scrollbar */

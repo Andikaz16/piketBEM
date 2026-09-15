@@ -14,7 +14,7 @@ export default function Navbar() {
         <div className="flex justify-between h-16">
           <div className="flex items-center">
             <Link href="/" className="flex items-center gap-3">
-              <Image src="/logo-kolektiva.png" alt="Logo Kolektiva" width={40} height={40} className="h-9 w-auto" />
+              <Image src="/logo-kolektiva.png" alt="Logo Kolektiva" width={400} height={400} className="h-9 w-auto" unoptimized />
               <div className="flex flex-col">
                 <span className="text-lg font-heading font-bold text-white tracking-wide uppercase leading-tight">Absensi Piket</span>
                 <span className="text-[10px] text-red-400 font-semibold tracking-widest uppercase">BEM UMS 2026</span>

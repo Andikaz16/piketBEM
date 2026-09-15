@@ -7,7 +7,7 @@ export default function Home() {
   return (
     <>
       <Navbar />
-      <main className="min-h-screen bg-dark-950">
+      <main className="min-h-screen">
         {/* Hero Section */}
         <section className="relative overflow-hidden">
           {/* Background */}
@@ -24,9 +24,11 @@ export default function Home() {
                   <Image 
                     src="/logo-kolektiva.png" 
                     alt="Kabinet Kolektiva" 
-                    width={120} 
-                    height={120} 
+                    width={800} 
+                    height={300} 
                     className="h-24 w-auto drop-shadow-2xl"
+                    priority
+                    unoptimized
                   />
                 </div>
               </div>
@@ -71,7 +73,7 @@ export default function Home() {
         </section>
 
         {/* Features Section */}
-        <section className="relative bg-dark-950">
+        <section className="relative">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
             <div className="text-center mb-16">
               <h2 className="text-4xl font-heading font-bold text-white uppercase tracking-tight">Cara Kerja</h2>
@@ -123,7 +125,7 @@ export default function Home() {
         </section>
 
         {/* Footer */}
-        <footer className="bg-dark-950 border-t border-white/5">
+        <footer className="border-t border-white/5">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
             <div className="flex flex-col md:flex-row justify-between items-center gap-4">
               <div className="flex items-center gap-3">
