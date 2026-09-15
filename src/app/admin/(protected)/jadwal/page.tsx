@@ -39,8 +39,8 @@ export default function JadwalPage() {
       fetch('/api/anggota').then((r) => r.json()),
     ])
       .then(([jadwalData, anggotaData]) => {
-        setJadwal(jadwalData);
-        setAnggota(anggotaData);
+        if (Array.isArray(jadwalData)) setJadwal(jadwalData);
+        if (Array.isArray(anggotaData)) setAnggota(anggotaData);
       })
       .catch(console.error)
       .finally(() => setLoading(false));

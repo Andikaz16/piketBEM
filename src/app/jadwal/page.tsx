@@ -24,7 +24,14 @@ export default function JadwalPublicPage() {
   useEffect(() => {
     fetch('/api/jadwal')
       .then((res) => res.json())
-      .then((data) => setJadwal(data))
+      .then((data) => {
+        if (Array.isArray(data)) {
+          setJadwal(data);
+        } else {
+          console.error('Data jadwal bukan array:', data);
+          setJadwal([]);
+        }
+      })
       .catch(console.error)
       .finally(() => setLoading(false));
   }, []);
