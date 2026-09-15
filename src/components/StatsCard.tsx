@@ -10,8 +10,8 @@ interface StatsCardProps {
 
 const colorMap = {
   blue: {
-    bg: 'bg-blue-50',
-    icon: 'text-blue-600',
+    bg: 'bg-red-500/10',
+    icon: 'text-red-400',
     border: 'border-blue-100',
   },
   green: {
@@ -35,13 +35,13 @@ export default function StatsCard({ title, value, icon: Icon, subtitle, color = 
   const colors = colorMap[color];
 
   return (
-    <div className={`bg-white rounded-xl border ${colors.border} p-6`}>
+    <div className={`bg-slate-900/60 backdrop-blur-sm rounded-xl border ${colors.border} p-6`}>
       <div className="flex items-center justify-between">
         <div>
-          <p className="text-sm font-medium text-gray-500">{title}</p>
-          <p className="text-3xl font-bold text-gray-900 mt-1">{value}</p>
+          <p className="text-sm font-medium text-gray-400">{title}</p>
+          <p className="text-3xl font-bold text-white mt-1">{value}</p>
           {subtitle && (
-            <p className="text-sm text-gray-500 mt-1">{subtitle}</p>
+            <p className="text-sm text-gray-400 mt-1">{subtitle}</p>
           )}
         </div>
         <div className={`${colors.bg} p-3 rounded-xl`}>

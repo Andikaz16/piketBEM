@@ -136,7 +136,7 @@ export default function AbsenPage() {
       <>
         <Navbar />
         <main className="min-h-screen flex items-center justify-center px-4">
-          <div className="bg-dark-900/60 backdrop-blur-sm rounded-2xl border border-white/5 p-8 max-w-md w-full text-center">
+          <div className="bg-slate-900/60 backdrop-blur-sm rounded-2xl border border-white/5 p-8 max-w-md w-full text-center">
             <div className="bg-green-600/20 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
               <CheckCircle2 className="h-8 w-8 text-green-400" />
             </div>
@@ -176,7 +176,7 @@ export default function AbsenPage() {
           </div>
 
           {/* Form */}
-          <form onSubmit={handleSubmit} className="bg-dark-900/60 backdrop-blur-sm rounded-2xl border border-white/5 p-6 space-y-5">
+          <form onSubmit={handleSubmit} className="bg-slate-900/60 backdrop-blur-sm rounded-2xl border border-white/5 p-6 space-y-5">
             {error && (
               <div className="bg-red-600/10 border border-red-600/20 rounded-xl px-4 py-3 flex items-start gap-3">
                 <AlertCircle className="h-5 w-5 text-red-400 mt-0.5 shrink-0" />
@@ -193,7 +193,7 @@ export default function AbsenPage() {
                 <select
                   value={selectedKementerian}
                   onChange={(e) => setSelectedKementerian(e.target.value)}
-                  className="w-full appearance-none bg-dark-800 border border-white/10 rounded-xl px-4 py-3 pr-10 text-white focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
+                  className="w-full appearance-none bg-slate-800 border border-white/10 rounded-xl px-4 py-3 pr-10 text-white focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
                   disabled={loadingData}
                 >
                   <option value="">Pilih Kementerian</option>
@@ -216,7 +216,7 @@ export default function AbsenPage() {
                 <select
                   value={selectedAnggota}
                   onChange={(e) => setSelectedAnggota(e.target.value)}
-                  className="w-full appearance-none bg-dark-800 border border-white/10 rounded-xl px-4 py-3 pr-10 text-white focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
+                  className="w-full appearance-none bg-slate-800 border border-white/10 rounded-xl px-4 py-3 pr-10 text-white focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
                   disabled={!selectedKementerian}
                 >
                   <option value="">Pilih Nama</option>
@@ -246,7 +246,7 @@ export default function AbsenPage() {
                 onChange={(e) => setKeterangan(e.target.value)}
                 rows={3}
                 placeholder="Tuliskan kegiatan yang dilakukan..."
-                className="w-full bg-dark-800 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent resize-none"
+                className="w-full bg-slate-800 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent resize-none"
               />
             </div>
 

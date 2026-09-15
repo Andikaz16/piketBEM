@@ -76,12 +76,12 @@ export default function RiwayatPage() {
     <div>
       {/* Header */}
       <div className="mb-8">
-        <h1 className="text-2xl font-bold text-gray-900">Riwayat Absensi</h1>
-        <p className="text-gray-500 mt-1">Lihat seluruh riwayat absensi piket</p>
+        <h1 className="text-2xl font-bold text-white">Riwayat Absensi</h1>
+        <p className="text-gray-400 mt-1">Lihat seluruh riwayat absensi piket</p>
       </div>
 
       {/* Filters */}
-      <div className="bg-white rounded-xl border border-gray-200 p-4 mb-6">
+      <div className="bg-slate-900/60 backdrop-blur-sm rounded-xl border border-white/10 p-4 mb-6">
         <div className="flex flex-wrap gap-4 items-end">
           <div className="flex-1 min-w-[200px]">
             <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -92,7 +92,7 @@ export default function RiwayatPage() {
               type="date"
               value={filterTanggal}
               onChange={(e) => setFilterTanggal(e.target.value)}
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full border border-white/10 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-red-500"
             />
           </div>
           <div className="flex-1 min-w-[200px]">
@@ -104,7 +104,7 @@ export default function RiwayatPage() {
               <select
                 value={filterKementerian}
                 onChange={(e) => setFilterKementerian(e.target.value)}
-                className="w-full appearance-none border border-gray-300 rounded-lg px-3 py-2 pr-8 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full appearance-none border border-white/10 rounded-lg px-3 py-2 pr-8 text-sm focus:outline-none focus:ring-2 focus:ring-red-500"
               >
                 <option value="">Semua Kementerian</option>
                 {kementerian.map((k) => (
@@ -118,7 +118,7 @@ export default function RiwayatPage() {
           </div>
           <button
             onClick={handleReset}
-            className="px-4 py-2 text-sm font-medium text-gray-600 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors"
+            className="px-4 py-2 text-sm font-medium text-gray-300 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors"
           >
             Reset Filter
           </button>
@@ -126,45 +126,45 @@ export default function RiwayatPage() {
       </div>
 
       {/* Table */}
-      <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
+      <div className="bg-slate-900/60 backdrop-blur-sm rounded-xl border border-white/10 overflow-hidden">
         {loading ? (
           <div className="flex items-center justify-center h-64">
-            <Loader2 className="h-8 w-8 animate-spin text-blue-600" />
+            <Loader2 className="h-8 w-8 animate-spin text-red-400" />
           </div>
         ) : absensi.length === 0 ? (
           <div className="px-6 py-12 text-center">
             <ClipboardCheck className="h-12 w-12 text-gray-300 mx-auto mb-3" />
-            <p className="text-gray-500 font-medium">Tidak ada data absensi</p>
+            <p className="text-gray-400 font-medium">Tidak ada data absensi</p>
             <p className="text-gray-400 text-sm mt-1">Coba ubah filter untuk melihat data lainnya</p>
           </div>
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full">
               <thead>
-                <tr className="bg-gray-50">
-                  <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">No</th>
-                  <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Nama</th>
-                  <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Kementerian</th>
-                  <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Jabatan</th>
-                  <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Tanggal</th>
-                  <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Jam</th>
-                  <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Keterangan</th>
-                  <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Foto</th>
+                <tr className="bg-slate-950/50">
+                  <th className="px-4 py-3 text-left text-xs font-semibold text-gray-400 uppercase tracking-wider">No</th>
+                  <th className="px-4 py-3 text-left text-xs font-semibold text-gray-400 uppercase tracking-wider">Nama</th>
+                  <th className="px-4 py-3 text-left text-xs font-semibold text-gray-400 uppercase tracking-wider">Kementerian</th>
+                  <th className="px-4 py-3 text-left text-xs font-semibold text-gray-400 uppercase tracking-wider">Jabatan</th>
+                  <th className="px-4 py-3 text-left text-xs font-semibold text-gray-400 uppercase tracking-wider">Tanggal</th>
+                  <th className="px-4 py-3 text-left text-xs font-semibold text-gray-400 uppercase tracking-wider">Jam</th>
+                  <th className="px-4 py-3 text-left text-xs font-semibold text-gray-400 uppercase tracking-wider">Keterangan</th>
+                  <th className="px-4 py-3 text-left text-xs font-semibold text-gray-400 uppercase tracking-wider">Foto</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-200">
                 {absensi.map((item, index) => (
-                  <tr key={item.id} className="hover:bg-gray-50">
-                    <td className="px-4 py-3 text-sm text-gray-500">{index + 1}</td>
+                  <tr key={item.id} className="hover:bg-slate-950/50">
+                    <td className="px-4 py-3 text-sm text-gray-400">{index + 1}</td>
                     <td className="px-4 py-3">
-                      <span className="text-sm font-medium text-gray-900">{item.anggota.namaLengkap}</span>
+                      <span className="text-sm font-medium text-white">{item.anggota.namaLengkap}</span>
                     </td>
                     <td className="px-4 py-3">
-                      <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-50 text-blue-700">
+                      <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-500/10 text-red-300">
                         {item.anggota.kementerian.nama}
                       </span>
                     </td>
-                    <td className="px-4 py-3 text-sm text-gray-500">{item.anggota.jabatan}</td>
+                    <td className="px-4 py-3 text-sm text-gray-400">{item.anggota.jabatan}</td>
                     <td className="px-4 py-3 text-sm text-gray-700">
                       {new Date(item.tanggal).toLocaleDateString('id-ID', {
                         day: 'numeric',
@@ -178,7 +178,7 @@ export default function RiwayatPage() {
                         {item.jamMasuk}
                       </span>
                     </td>
-                    <td className="px-4 py-3 text-sm text-gray-500 max-w-[200px] truncate">
+                    <td className="px-4 py-3 text-sm text-gray-400 max-w-[200px] truncate">
                       {item.keterangan || '-'}
                     </td>
                     <td className="px-4 py-3">
@@ -187,7 +187,7 @@ export default function RiwayatPage() {
                           onClick={() =>
                             setPhotoModal({ isOpen: true, url: item.fotoSelfie, title: 'Foto Selfie' })
                           }
-                          className="inline-flex items-center gap-1 px-2 py-1 text-xs font-medium text-blue-700 bg-blue-50 rounded-md hover:bg-blue-100 transition-colors"
+                          className="inline-flex items-center gap-1 px-2 py-1 text-xs font-medium text-red-300 bg-red-500/10 rounded-md hover:bg-blue-100 transition-colors"
                         >
                           <Eye className="h-3 w-3" />
                           Selfie
@@ -212,7 +212,7 @@ export default function RiwayatPage() {
 
         {/* Count */}
         {!loading && absensi.length > 0 && (
-          <div className="px-4 py-3 bg-gray-50 border-t border-gray-200 text-sm text-gray-500">
+          <div className="px-4 py-3 bg-slate-950/50 border-t border-white/10 text-sm text-gray-400">
             Menampilkan {absensi.length} data absensi
           </div>
         )}

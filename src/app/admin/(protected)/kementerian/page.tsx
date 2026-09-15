@@ -117,7 +117,7 @@ export default function KementerianPage() {
   if (loading) {
     return (
       <div className="flex items-center justify-center h-64">
-        <Loader2 className="h-8 w-8 animate-spin text-blue-600" />
+        <Loader2 className="h-8 w-8 animate-spin text-red-400" />
       </div>
     );
   }
@@ -127,12 +127,12 @@ export default function KementerianPage() {
       {/* Header */}
       <div className="flex items-center justify-between mb-8">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Kementerian</h1>
-          <p className="text-gray-500 mt-1">Kelola kementerian dan anggota BEM</p>
+          <h1 className="text-2xl font-bold text-white">Kementerian</h1>
+          <p className="text-gray-400 mt-1">Kelola kementerian dan anggota BEM</p>
         </div>
         <button
           onClick={() => setShowAddModal(true)}
-          className="inline-flex items-center gap-2 bg-blue-600 text-white px-4 py-2.5 rounded-xl font-medium hover:bg-blue-700 transition-colors"
+          className="inline-flex items-center gap-2 bg-red-600 text-white px-4 py-2.5 rounded-xl font-medium hover:bg-red-700 transition-colors"
         >
           <Plus className="h-5 w-5" />
           Tambah Kementerian
@@ -142,19 +142,19 @@ export default function KementerianPage() {
       {/* Kementerian List */}
       <div className="space-y-4">
         {kementerian.map((k) => (
-          <div key={k.id} className="bg-white rounded-xl border border-gray-200 overflow-hidden">
+          <div key={k.id} className="bg-slate-900/60 backdrop-blur-sm rounded-xl border border-white/10 overflow-hidden">
             {/* Header */}
             <div
-              className="px-6 py-4 flex items-center justify-between cursor-pointer hover:bg-gray-50"
+              className="px-6 py-4 flex items-center justify-between cursor-pointer hover:bg-slate-950/50"
               onClick={() => setExpandedId(expandedId === k.id ? null : k.id)}
             >
               <div className="flex items-center gap-3">
-                <div className="bg-blue-50 p-2 rounded-lg">
-                  <Building2 className="h-5 w-5 text-blue-600" />
+                <div className="bg-red-500/10 p-2 rounded-lg">
+                  <Building2 className="h-5 w-5 text-red-400" />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-gray-900">{k.nama}</h3>
-                  <p className="text-sm text-gray-500">{k.anggota.length} anggota</p>
+                  <h3 className="font-semibold text-white">{k.nama}</h3>
+                  <p className="text-sm text-gray-400">{k.anggota.length} anggota</p>
                 </div>
               </div>
               <div className="flex items-center gap-2">
@@ -177,15 +177,15 @@ export default function KementerianPage() {
 
             {/* Expanded Content */}
             {expandedId === k.id && (
-              <div className="border-t border-gray-200">
-                <div className="px-6 py-3 bg-gray-50 flex items-center justify-between">
-                  <span className="text-sm font-medium text-gray-500 flex items-center gap-2">
+              <div className="border-t border-white/10">
+                <div className="px-6 py-3 bg-slate-950/50 flex items-center justify-between">
+                  <span className="text-sm font-medium text-gray-400 flex items-center gap-2">
                     <Users className="h-4 w-4" />
                     Daftar Anggota
                   </span>
                   <button
                     onClick={() => setAddingAnggota(k.id)}
-                    className="inline-flex items-center gap-1 text-sm text-blue-600 hover:text-blue-700 font-medium"
+                    className="inline-flex items-center gap-1 text-sm text-red-400 hover:text-red-300 font-medium"
                   >
                     <UserPlus className="h-4 w-4" />
                     Tambah Anggota
@@ -194,24 +194,24 @@ export default function KementerianPage() {
 
                 {/* Add Anggota Form */}
                 {addingAnggota === k.id && (
-                  <div className="px-6 py-3 bg-blue-50 border-b border-blue-100 flex flex-wrap gap-3 items-end">
+                  <div className="px-6 py-3 bg-red-500/10 border-b border-blue-100 flex flex-wrap gap-3 items-end">
                     <div className="flex-1 min-w-[200px]">
-                      <label className="block text-xs font-medium text-gray-600 mb-1">Nama Lengkap</label>
+                      <label className="block text-xs font-medium text-gray-300 mb-1">Nama Lengkap</label>
                       <input
                         type="text"
                         value={newAnggotaNama}
                         onChange={(e) => setNewAnggotaNama(e.target.value)}
-                        className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        className="w-full border border-white/10 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-red-500"
                         placeholder="Nama lengkap anggota"
                       />
                     </div>
                     <div className="flex-1 min-w-[200px]">
-                      <label className="block text-xs font-medium text-gray-600 mb-1">Jabatan</label>
+                      <label className="block text-xs font-medium text-gray-300 mb-1">Jabatan</label>
                       <input
                         type="text"
                         value={newAnggotaJabatan}
                         onChange={(e) => setNewAnggotaJabatan(e.target.value)}
-                        className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        className="w-full border border-white/10 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-red-500"
                         placeholder="cth: Staff Menteri"
                       />
                     </div>
@@ -219,13 +219,13 @@ export default function KementerianPage() {
                       <button
                         onClick={() => handleAddAnggota(k.id)}
                         disabled={submitting}
-                        className="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-blue-700 disabled:opacity-50"
+                        className="bg-red-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-red-700 disabled:opacity-50"
                       >
                         Simpan
                       </button>
                       <button
                         onClick={() => setAddingAnggota(null)}
-                        className="bg-white text-gray-600 px-4 py-2 rounded-lg text-sm font-medium border border-gray-300 hover:bg-gray-50"
+                        className="bg-slate-900/60 backdrop-blur-sm text-gray-300 px-4 py-2 rounded-lg text-sm font-medium border border-white/10 hover:bg-slate-950/50"
                       >
                         Batal
                       </button>
@@ -242,12 +242,12 @@ export default function KementerianPage() {
                 ) : (
                   <div className="divide-y divide-gray-100">
                     {k.anggota.map((a, idx) => (
-                      <div key={a.id} className="px-6 py-3 flex items-center justify-between hover:bg-gray-50">
+                      <div key={a.id} className="px-6 py-3 flex items-center justify-between hover:bg-slate-950/50">
                         <div className="flex items-center gap-3">
                           <span className="text-sm text-gray-400 w-6">{idx + 1}.</span>
                           <div>
-                            <p className="text-sm font-medium text-gray-900">{a.namaLengkap}</p>
-                            <p className="text-xs text-gray-500">{a.jabatan}</p>
+                            <p className="text-sm font-medium text-white">{a.namaLengkap}</p>
+                            <p className="text-xs text-gray-400">{a.jabatan}</p>
                           </div>
                         </div>
                         <button
@@ -270,10 +270,10 @@ export default function KementerianPage() {
       {showAddModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
           <div className="absolute inset-0 bg-black/50" onClick={() => setShowAddModal(false)} />
-          <div className="relative bg-white rounded-xl max-w-md w-full p-6 shadow-2xl">
+          <div className="relative bg-slate-900/60 backdrop-blur-sm rounded-xl max-w-md w-full p-6 shadow-2xl">
             <div className="flex items-center justify-between mb-4">
-              <h3 className="text-lg font-semibold text-gray-900">Tambah Kementerian</h3>
-              <button onClick={() => setShowAddModal(false)} className="text-gray-400 hover:text-gray-600">
+              <h3 className="text-lg font-semibold text-white">Tambah Kementerian</h3>
+              <button onClick={() => setShowAddModal(false)} className="text-gray-400 hover:text-gray-300">
                 <X className="h-5 w-5" />
               </button>
             </div>
@@ -284,7 +284,7 @@ export default function KementerianPage() {
                   type="text"
                   value={newNama}
                   onChange={(e) => setNewNama(e.target.value)}
-                  className="w-full border border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-red-500"
                   placeholder="cth: Hubungan Masyarakat"
                 />
               </div>
@@ -292,7 +292,7 @@ export default function KementerianPage() {
                 <button
                   onClick={handleAddKementerian}
                   disabled={submitting || !newNama.trim()}
-                  className="flex-1 bg-blue-600 text-white py-2.5 rounded-xl font-medium hover:bg-blue-700 disabled:opacity-50"
+                  className="flex-1 bg-red-600 text-white py-2.5 rounded-xl font-medium hover:bg-red-700 disabled:opacity-50"
                 >
                   {submitting ? 'Menyimpan...' : 'Simpan'}
                 </button>

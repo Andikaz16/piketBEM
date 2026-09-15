@@ -64,7 +64,7 @@ export default function DashboardPage() {
   if (loading) {
     return (
       <div className="flex items-center justify-center h-64">
-        <Loader2 className="h-8 w-8 animate-spin text-blue-600" />
+        <Loader2 className="h-8 w-8 animate-spin text-red-400" />
       </div>
     );
   }
@@ -73,8 +73,8 @@ export default function DashboardPage() {
     <div>
       {/* Header */}
       <div className="mb-8">
-        <h1 className="text-2xl font-bold text-gray-900">Dashboard</h1>
-        <p className="text-gray-500 mt-1">{formatTanggal(new Date())}</p>
+        <h1 className="text-2xl font-bold text-white">Dashboard</h1>
+        <p className="text-gray-400 mt-1">{formatTanggal(new Date())}</p>
       </div>
 
       {/* Stats */}
@@ -108,43 +108,43 @@ export default function DashboardPage() {
       </div>
 
       {/* Recent Attendance Table */}
-      <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
-        <div className="px-6 py-4 border-b border-gray-200">
-          <h2 className="text-lg font-semibold text-gray-900">Absensi Hari Ini</h2>
+      <div className="bg-slate-900/60 backdrop-blur-sm rounded-xl border border-white/10 overflow-hidden">
+        <div className="px-6 py-4 border-b border-white/10">
+          <h2 className="text-lg font-semibold text-white">Absensi Hari Ini</h2>
         </div>
 
         {absensiHariIni.length === 0 ? (
           <div className="px-6 py-12 text-center">
             <ClipboardCheck className="h-12 w-12 text-gray-300 mx-auto mb-3" />
-            <p className="text-gray-500 font-medium">Belum ada absensi hari ini</p>
+            <p className="text-gray-400 font-medium">Belum ada absensi hari ini</p>
             <p className="text-gray-400 text-sm mt-1">Data akan muncul setelah anggota melakukan absensi</p>
           </div>
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full">
               <thead>
-                <tr className="bg-gray-50">
-                  <th className="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">No</th>
-                  <th className="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Nama</th>
-                  <th className="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Kementerian</th>
-                  <th className="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Jabatan</th>
-                  <th className="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Jam Masuk</th>
-                  <th className="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Foto</th>
+                <tr className="bg-slate-950/50">
+                  <th className="px-6 py-3 text-left text-xs font-semibold text-gray-400 uppercase tracking-wider">No</th>
+                  <th className="px-6 py-3 text-left text-xs font-semibold text-gray-400 uppercase tracking-wider">Nama</th>
+                  <th className="px-6 py-3 text-left text-xs font-semibold text-gray-400 uppercase tracking-wider">Kementerian</th>
+                  <th className="px-6 py-3 text-left text-xs font-semibold text-gray-400 uppercase tracking-wider">Jabatan</th>
+                  <th className="px-6 py-3 text-left text-xs font-semibold text-gray-400 uppercase tracking-wider">Jam Masuk</th>
+                  <th className="px-6 py-3 text-left text-xs font-semibold text-gray-400 uppercase tracking-wider">Foto</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-200">
                 {absensiHariIni.map((item, index) => (
-                  <tr key={item.id} className="hover:bg-gray-50">
-                    <td className="px-6 py-4 text-sm text-gray-500">{index + 1}</td>
+                  <tr key={item.id} className="hover:bg-slate-950/50">
+                    <td className="px-6 py-4 text-sm text-gray-400">{index + 1}</td>
                     <td className="px-6 py-4">
-                      <span className="text-sm font-medium text-gray-900">{item.anggota.namaLengkap}</span>
+                      <span className="text-sm font-medium text-white">{item.anggota.namaLengkap}</span>
                     </td>
                     <td className="px-6 py-4">
-                      <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-50 text-blue-700">
+                      <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-500/10 text-red-300">
                         {item.anggota.kementerian.nama}
                       </span>
                     </td>
-                    <td className="px-6 py-4 text-sm text-gray-500">{item.anggota.jabatan}</td>
+                    <td className="px-6 py-4 text-sm text-gray-400">{item.anggota.jabatan}</td>
                     <td className="px-6 py-4">
                       <span className="inline-flex items-center gap-1 text-sm text-gray-700">
                         <Clock className="h-3.5 w-3.5 text-gray-400" />
@@ -157,7 +157,7 @@ export default function DashboardPage() {
                           onClick={() =>
                             setPhotoModal({ isOpen: true, url: item.fotoSelfie, title: 'Foto Selfie' })
                           }
-                          className="inline-flex items-center gap-1 px-2 py-1 text-xs font-medium text-blue-700 bg-blue-50 rounded-md hover:bg-blue-100 transition-colors"
+                          className="inline-flex items-center gap-1 px-2 py-1 text-xs font-medium text-red-300 bg-red-500/10 rounded-md hover:bg-blue-100 transition-colors"
                         >
                           <Eye className="h-3 w-3" />
                           Selfie

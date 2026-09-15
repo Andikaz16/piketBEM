@@ -39,7 +39,7 @@ export default function AdminLoginPage() {
   };
 
   return (
-    <main className="min-h-screen bg-dark-950 flex items-center justify-center px-4 relative overflow-hidden">
+    <main className="min-h-screen bg-slate-950 flex items-center justify-center px-4 relative overflow-hidden">
       {/* Background glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-red-600/5 rounded-full blur-3xl" />
 
@@ -57,7 +57,7 @@ export default function AdminLoginPage() {
         {/* Form */}
         <form
           onSubmit={handleSubmit}
-          className="bg-dark-900/60 backdrop-blur-sm rounded-2xl border border-white/5 p-6 space-y-5"
+          className="bg-slate-900/60 backdrop-blur-sm rounded-2xl border border-white/5 p-6 space-y-5"
         >
           {error && (
             <div className="bg-red-600/10 border border-red-600/20 rounded-xl px-4 py-3 flex items-center gap-3">
@@ -76,7 +76,7 @@ export default function AdminLoginPage() {
               onChange={(e) => setUsername(e.target.value)}
               placeholder="Masukkan username"
               required
-              className="w-full bg-dark-800 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
+              className="w-full bg-slate-800 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
             />
           </div>
 
@@ -91,7 +91,7 @@ export default function AdminLoginPage() {
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="Masukkan password"
                 required
-                className="w-full bg-dark-800 border border-white/10 rounded-xl px-4 py-3 pr-12 text-white placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
+                className="w-full bg-slate-800 border border-white/10 rounded-xl px-4 py-3 pr-12 text-white placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
               />
               <button
                 type="button"

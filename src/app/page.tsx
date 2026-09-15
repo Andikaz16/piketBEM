@@ -82,7 +82,7 @@ export default function Home() {
             </div>
             <div className="grid md:grid-cols-3 gap-8">
               {/* Step 1 */}
-              <div className="bg-dark-900/50 backdrop-blur-sm p-8 rounded-2xl border border-white/5 hover:border-red-600/30 transition-all group hover:-translate-y-1">
+              <div className="bg-slate-900/50 backdrop-blur-sm p-8 rounded-2xl border border-white/5 hover:border-red-600/30 transition-all group hover:-translate-y-1">
                 <div className="bg-red-600/10 w-14 h-14 rounded-xl flex items-center justify-center mb-6 group-hover:bg-red-600/20 transition-colors">
                   <Camera className="h-7 w-7 text-red-500" />
                 </div>
@@ -95,7 +95,7 @@ export default function Home() {
                 </p>
               </div>
               {/* Step 2 */}
-              <div className="bg-dark-900/50 backdrop-blur-sm p-8 rounded-2xl border border-white/5 hover:border-red-600/30 transition-all group hover:-translate-y-1">
+              <div className="bg-slate-900/50 backdrop-blur-sm p-8 rounded-2xl border border-white/5 hover:border-red-600/30 transition-all group hover:-translate-y-1">
                 <div className="bg-red-600/10 w-14 h-14 rounded-xl flex items-center justify-center mb-6 group-hover:bg-red-600/20 transition-colors">
                   <Users className="h-7 w-7 text-red-500" />
                 </div>
@@ -108,7 +108,7 @@ export default function Home() {
                 </p>
               </div>
               {/* Step 3 */}
-              <div className="bg-dark-900/50 backdrop-blur-sm p-8 rounded-2xl border border-white/5 hover:border-red-600/30 transition-all group hover:-translate-y-1">
+              <div className="bg-slate-900/50 backdrop-blur-sm p-8 rounded-2xl border border-white/5 hover:border-red-600/30 transition-all group hover:-translate-y-1">
                 <div className="bg-red-600/10 w-14 h-14 rounded-xl flex items-center justify-center mb-6 group-hover:bg-red-600/20 transition-colors">
                   <Shield className="h-7 w-7 text-red-500" />
                 </div>
