@@ -1,7 +1,9 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 
-export async function GET(request: NextRequest) {
+export const dynamic = 'force-dynamic';
+
+export async function GET(request: Request) {
   try {
     const { searchParams } = new URL(request.url);
     const kementerianId = searchParams.get('kementerian_id');
@@ -30,7 +32,7 @@ export async function GET(request: NextRequest) {
   }
 }
 
-export async function POST(request: NextRequest) {
+export async function POST(request: Request) {
   try {
     const body = await request.json();
     const { namaLengkap, jabatan, kementerianId } = body;
@@ -60,7 +62,7 @@ export async function POST(request: NextRequest) {
   }
 }
 
-export async function PUT(request: NextRequest) {
+export async function PUT(request: Request) {
   try {
     const body = await request.json();
     const { id, namaLengkap, jabatan, kementerianId } = body;
@@ -91,7 +93,7 @@ export async function PUT(request: NextRequest) {
   }
 }
 
-export async function DELETE(request: NextRequest) {
+export async function DELETE(request: Request) {
   try {
     const { searchParams } = new URL(request.url);
     const id = searchParams.get('id');

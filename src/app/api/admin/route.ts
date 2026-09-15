@@ -1,8 +1,10 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import bcrypt from 'bcryptjs';
 
-export async function POST(request: NextRequest) {
+export const dynamic = 'force-dynamic';
+
+export async function POST(request: Request) {
   try {
     const body = await request.json();
     const { username, password, nama } = body;
