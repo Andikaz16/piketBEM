@@ -3,72 +3,100 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, Shield, Calendar, ClipboardCheck, Home } from 'lucide-react';
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <nav className="bg-slate-950/95 backdrop-blur-md border-b border-red-900/30 sticky top-0 z-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between h-16">
-          <div className="flex items-center">
-            <Link href="/" className="flex items-center gap-3">
-              <Image src="/logo-kolektiva.png" alt="Logo Kolektiva" width={400} height={400} className="h-9 w-auto" unoptimized />
-              <div className="flex flex-col">
-                <span className="text-lg font-heading font-bold text-white tracking-wide uppercase leading-tight">Absensi Piket</span>
-                <span className="text-[10px] text-red-400 font-semibold tracking-widest uppercase">BEM UMS 2026</span>
-              </div>
-            </Link>
+    <header className="sticky top-0 z-50 bg-black/80 backdrop-blur-md border-b border-red-900/30">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-24 flex items-center justify-between">
+        {/* Top-left: Logo + Tag */}
+        <Link href="/" className="flex items-center gap-4 group">
+          <div className="relative w-24 h-16 sm:w-36 sm:h-20 shrink-0 transition-transform group-hover:scale-105">
+            <Image
+              src="/logo-kolektiva.png"
+              alt="Kolektiva Logo"
+              fill
+              className="object-contain drop-shadow-[0_0_20px_rgba(220,38,38,0.6)]"
+              unoptimized
+              priority
+            />
           </div>
+          <span className="hidden lg:block text-sm font-heading font-extrabold text-white uppercase tracking-[0.2em] leading-tight drop-shadow">
+            ABSENSI PIKET<br />
+            <span className="text-red-500">KOLEKTIVA 2026</span>
+          </span>
+        </Link>
 
-          <div className="hidden md:flex items-center space-x-1">
-            <Link href="/" className="text-gray-300 hover:text-white hover:bg-white/5 px-4 py-2 rounded-lg transition-all font-medium text-sm">
-              Beranda
-            </Link>
-            <Link href="/jadwal" className="text-gray-300 hover:text-white hover:bg-white/5 px-4 py-2 rounded-lg transition-all font-medium text-sm">
-              Jadwal
-            </Link>
-            <Link href="/absen" className="text-gray-300 hover:text-white hover:bg-white/5 px-4 py-2 rounded-lg transition-all font-medium text-sm">
-              Absen
-            </Link>
-            <Link
-              href="/admin/login"
-              className="ml-2 bg-red-600 text-white px-5 py-2 rounded-lg hover:bg-red-700 transition-colors font-bold text-sm uppercase tracking-wide"
-            >
-              Admin
-            </Link>
-          </div>
-
-          <div className="md:hidden flex items-center">
-            <button
-              onClick={() => setIsOpen(!isOpen)}
-              className="text-gray-300 hover:text-white p-2"
-            >
-              {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-            </button>
-          </div>
+        {/* Top-right: Nav links */}
+        <div className="hidden md:flex items-center gap-3">
+          {[
+            { href: '/', label: 'BERANDA', icon: Home },
+            { href: '/jadwal', label: 'JADWAL', icon: Calendar },
+            { href: '/absen', label: 'ABSEN', icon: ClipboardCheck },
+          ].map((link) => {
+            const Icon = link.icon;
+            return (
+              <Link
+                key={link.href}
+                href={link.href}
+                className="flex items-center gap-2 text-white/80 hover:text-white px-4 py-2.5 rounded-xl hover:bg-white/10 transition-all font-heading font-bold text-xs uppercase tracking-wider"
+              >
+                <Icon className="h-4 w-4 text-red-500" />
+                <span>{link.label}</span>
+              </Link>
+            );
+          })}
+          <Link
+            href="/admin/login"
+            className="ml-3 bg-red-600 text-white px-6 py-2.5 rounded-xl font-heading font-bold text-xs uppercase tracking-widest hover:bg-red-500 transition-all shadow-[0_0_25px_rgba(220,38,38,0.5)] flex items-center gap-2 hover:scale-[1.03]"
+          >
+            <Shield className="h-4 w-4" />
+            ADMIN
+          </Link>
         </div>
+
+        {/* Mobile toggle */}
+        <button
+          onClick={() => setIsOpen(!isOpen)}
+          className="md:hidden text-white/80 hover:text-white p-2 rounded-lg hover:bg-white/10 transition-all"
+        >
+          {isOpen ? <X className="h-7 w-7" /> : <Menu className="h-7 w-7" />}
+        </button>
       </div>
 
+      {/* Mobile menu */}
       {isOpen && (
-        <div className="md:hidden border-t border-red-900/30 bg-slate-950/98 backdrop-blur-md">
-          <div className="px-4 py-3 space-y-1">
-            <Link href="/" className="block px-3 py-2.5 rounded-lg text-gray-300 hover:bg-white/5 hover:text-white font-medium" onClick={() => setIsOpen(false)}>
-              Beranda
-            </Link>
-            <Link href="/jadwal" className="block px-3 py-2.5 rounded-lg text-gray-300 hover:bg-white/5 hover:text-white font-medium" onClick={() => setIsOpen(false)}>
-              Jadwal
-            </Link>
-            <Link href="/absen" className="block px-3 py-2.5 rounded-lg text-gray-300 hover:bg-white/5 hover:text-white font-medium" onClick={() => setIsOpen(false)}>
-              Absen
-            </Link>
-            <Link href="/admin/login" className="block px-3 py-2.5 rounded-lg bg-red-600 text-white text-center hover:bg-red-700 font-bold uppercase tracking-wide" onClick={() => setIsOpen(false)}>
-              Admin
-            </Link>
-          </div>
+        <div className="md:hidden bg-black/95 backdrop-blur-xl px-4 py-4 space-y-3 border-t border-red-900/30 animate-fade-in">
+          {[
+            { href: '/', label: 'BERANDA', icon: Home },
+            { href: '/jadwal', label: 'JADWAL', icon: Calendar },
+            { href: '/absen', label: 'ABSEN', icon: ClipboardCheck },
+          ].map((link) => {
+            const Icon = link.icon;
+            return (
+              <Link
+                key={link.href}
+                href={link.href}
+                className="flex items-center gap-3 px-3 py-3 rounded-lg text-white/80 hover:bg-white/10 hover:text-white transition-all font-heading font-bold text-sm uppercase tracking-wider"
+                onClick={() => setIsOpen(false)}
+              >
+                <Icon className="h-5 w-5 text-red-500" />
+                {link.label}
+              </Link>
+            );
+          })}
+          <Link
+            href="/admin/login"
+            className="flex items-center justify-center gap-2 px-4 py-3 rounded-lg bg-red-600 text-white font-heading font-bold text-sm uppercase tracking-widest hover:bg-red-500 transition-all shadow-[0_0_20px_rgba(220,38,38,0.4)]"
+            onClick={() => setIsOpen(false)}
+          >
+            <Shield className="h-4 w-4" />
+            ADMIN
+          </Link>
         </div>
       )}
-    </nav>
+    </header>
   );
 }

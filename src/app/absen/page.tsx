@@ -136,13 +136,13 @@ export default function AbsenPage() {
       <>
         <Navbar />
         <main className="min-h-screen flex items-center justify-center px-4">
-          <div className="bg-slate-900/60 backdrop-blur-sm rounded-2xl border border-white/5 p-8 max-w-md w-full text-center">
-            <div className="bg-green-600/20 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-              <CheckCircle2 className="h-8 w-8 text-green-400" />
+          <div className="glass-card rounded-3xl p-10 max-w-md w-full text-center animate-scale-in border border-green-500/20">
+            <div className="bg-green-500/10 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6 border border-green-500/20">
+              <CheckCircle2 className="h-10 w-10 text-green-400" />
             </div>
-            <h2 className="text-2xl font-heading font-bold text-white uppercase mb-2">Absensi Berhasil!</h2>
-            <p className="text-gray-400 mb-6">
-              Data kehadiran piket Anda telah berhasil dicatat. Terima kasih atas kontribusinya.
+            <h2 className="text-3xl font-heading font-bold text-white uppercase mb-3">Absensi Berhasil!</h2>
+            <p className="text-gray-400 mb-8">
+              Data kehadiran piket Anda telah berhasil dicatat. Terima kasih.
             </p>
             <button
               onClick={() => {
@@ -153,7 +153,7 @@ export default function AbsenPage() {
                 setFotoKegiatan(null);
                 setKeterangan('');
               }}
-              className="bg-red-600 text-white px-6 py-2.5 rounded-xl font-bold uppercase tracking-wide hover:bg-red-700 transition-colors"
+              className="bg-red-600 text-white px-8 py-3 rounded-xl font-bold uppercase tracking-wider hover:bg-red-700 transition-all shadow-lg shadow-red-600/20 hover:shadow-red-600/40"
             >
               Absen Lagi
             </button>
@@ -166,17 +166,22 @@ export default function AbsenPage() {
   return (
     <>
       <Navbar />
-      <main className="min-h-screen py-8 px-4">
+      <main className="min-h-screen py-12 px-4">
         <div className="max-w-lg mx-auto">
           {/* Header */}
-          <div className="text-center mb-8">
-            <h1 className="text-3xl font-heading font-bold text-white uppercase tracking-tight">Form Absensi Piket</h1>
-            <div className="w-16 h-1 bg-red-600 mx-auto mt-3 rounded-full" />
+          <div className="text-center mb-10 animate-slide-up">
+            <div className="inline-flex items-center gap-2 text-red-400 text-xs font-bold uppercase tracking-[0.3em] mb-4">
+              <div className="w-6 h-px bg-red-600" />
+              <ClipboardCheck className="h-3.5 w-3.5" />
+              Form Absensi
+              <div className="w-6 h-px bg-red-600" />
+            </div>
+            <h1 className="text-4xl font-heading font-bold text-white uppercase tracking-tight">Form Absensi Piket</h1>
             <p className="text-gray-400 mt-4">Isi data kehadiran piket Anda</p>
           </div>
 
           {/* Form */}
-          <form onSubmit={handleSubmit} className="bg-slate-900/60 backdrop-blur-sm rounded-2xl border border-white/5 p-6 space-y-5">
+          <form onSubmit={handleSubmit} className="glass-card rounded-2xl p-6 space-y-5 animate-slide-up-delay">
             {error && (
               <div className="bg-red-600/10 border border-red-600/20 rounded-xl px-4 py-3 flex items-start gap-3">
                 <AlertCircle className="h-5 w-5 text-red-400 mt-0.5 shrink-0" />
@@ -186,19 +191,19 @@ export default function AbsenPage() {
 
             {/* Kementerian */}
             <div>
-              <label className="block text-sm font-semibold text-gray-300 mb-1.5 uppercase tracking-wide">
+              <label className="block text-sm font-bold text-gray-300 mb-1.5 uppercase tracking-wider">
                 Kementerian <span className="text-red-500">*</span>
               </label>
               <div className="relative">
                 <select
                   value={selectedKementerian}
                   onChange={(e) => setSelectedKementerian(e.target.value)}
-                  className="w-full appearance-none bg-slate-800 border border-white/10 rounded-xl px-4 py-3 pr-10 text-white focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
+                  className="w-full appearance-none bg-white/5 border border-white/10 rounded-xl px-4 py-3 pr-10 text-white focus:outline-none input-glow transition-all"
                   disabled={loadingData}
                 >
-                  <option value="">Pilih Kementerian</option>
+                  <option value="" className="bg-slate-900">Pilih Kementerian</option>
                   {kementerian.map((k) => (
-                    <option key={k.id} value={k.id.toString()}>
+                    <option key={k.id} value={k.id.toString()} className="bg-slate-900">
                       {k.nama}
                     </option>
                   ))}
@@ -209,19 +214,19 @@ export default function AbsenPage() {
 
             {/* Anggota */}
             <div>
-              <label className="block text-sm font-semibold text-gray-300 mb-1.5 uppercase tracking-wide">
+              <label className="block text-sm font-bold text-gray-300 mb-1.5 uppercase tracking-wider">
                 Nama <span className="text-red-500">*</span>
               </label>
               <div className="relative">
                 <select
                   value={selectedAnggota}
                   onChange={(e) => setSelectedAnggota(e.target.value)}
-                  className="w-full appearance-none bg-slate-800 border border-white/10 rounded-xl px-4 py-3 pr-10 text-white focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
+                  className="w-full appearance-none bg-white/5 border border-white/10 rounded-xl px-4 py-3 pr-10 text-white focus:outline-none input-glow transition-all"
                   disabled={!selectedKementerian}
                 >
-                  <option value="">Pilih Nama</option>
+                  <option value="" className="bg-slate-900">Pilih Nama</option>
                   {anggotaList.map((a) => (
-                    <option key={a.id} value={a.id.toString()}>
+                    <option key={a.id} value={a.id.toString()} className="bg-slate-900">
                       {a.namaLengkap} - {a.jabatan}
                     </option>
                   ))}
@@ -238,7 +243,7 @@ export default function AbsenPage() {
 
             {/* Keterangan */}
             <div>
-              <label className="block text-sm font-semibold text-gray-300 mb-1.5 uppercase tracking-wide">
+              <label className="block text-sm font-bold text-gray-300 mb-1.5 uppercase tracking-wider">
                 Keterangan (Opsional)
               </label>
               <textarea
@@ -246,7 +251,7 @@ export default function AbsenPage() {
                 onChange={(e) => setKeterangan(e.target.value)}
                 rows={3}
                 placeholder="Tuliskan kegiatan yang dilakukan..."
-                className="w-full bg-slate-800 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent resize-none"
+                className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-600 focus:outline-none input-glow transition-all resize-none"
               />
             </div>
 
@@ -254,7 +259,7 @@ export default function AbsenPage() {
             <button
               type="submit"
               disabled={loading || !selectedAnggota || !fotoSelfie || !fotoKegiatan}
-              className="w-full bg-red-600 text-white py-3.5 rounded-xl font-bold uppercase tracking-wide hover:bg-red-700 transition-all disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center gap-2 shadow-lg shadow-red-600/20"
+              className="w-full bg-red-600 text-white py-4 rounded-xl font-bold uppercase tracking-wider hover:bg-red-700 transition-all disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(220,38,38,0.2)] hover:shadow-[0_0_40px_rgba(220,38,38,0.4)] disabled:shadow-none"
             >
               {loading ? (
                 <>

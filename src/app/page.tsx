@@ -1,144 +1,93 @@
-import Link from 'next/link';
 import Image from 'next/image';
+import Link from 'next/link';
 import Navbar from '@/components/Navbar';
-import { ClipboardCheck, Shield, Users, Calendar, ArrowRight, CalendarDays, Camera } from 'lucide-react';
+import { ArrowRight, CalendarDays } from 'lucide-react';
 
 export default function Home() {
   return (
-    <>
+    <div className="min-h-screen flex flex-col relative overflow-hidden bg-black text-white">
+      {/* Background gradient */}
+      <div className="absolute inset-0 bg-[linear-gradient(160deg_#0d0000_0%_#1a0000_25%_#3b0a0a_50%_#1a0000_75%_#0d0000_100%)] pointer-events-none" />
+
+      {/* Subtle red glow orbs */}
+      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-red-600/10 rounded-full blur-[160px] pointer-events-none" />
+      <div className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-red-800/15 rounded-full blur-[120px] pointer-events-none" />
+
+      {/* Grid overlay */}
+      <div
+        className="absolute inset-0 opacity-[0.02] pointer-events-none"
+        style={{
+          backgroundImage:
+            'linear-gradient(rgba(220,38,38,0.3) 1px, transparent 1px), linear-gradient(90deg, rgba(220,38,38,0.3) 1px, transparent 1px)',
+          backgroundSize: '80px 80px',
+        }}
+      />
+
+      {/* Shared sticky Header */}
       <Navbar />
-      <main className="min-h-screen">
-        {/* Hero Section */}
-        <section className="relative overflow-hidden">
-          {/* Background */}
-          <div className="absolute inset-0 bg-hero-gradient" />
-          <div className="absolute inset-0 bg-red-glow" />
-          <div className="absolute top-0 right-0 w-96 h-96 bg-red-600/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3" />
-          <div className="absolute bottom-0 left-0 w-72 h-72 bg-red-700/10 rounded-full blur-3xl translate-y-1/2 -translate-x-1/3" />
-          
-          <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 lg:py-36">
-            <div className="text-center max-w-3xl mx-auto">
-              {/* Logo */}
-              <div className="flex justify-center mb-8">
-                <div className="relative">
-                  <Image 
-                    src="/logo-kolektiva.png" 
-                    alt="Kabinet Kolektiva" 
-                    width={800} 
-                    height={300} 
-                    className="h-24 w-auto drop-shadow-2xl"
-                    priority
-                    unoptimized
-                  />
-                </div>
-              </div>
 
-              <div className="inline-flex items-center gap-2 bg-red-600/20 text-red-400 border border-red-600/30 px-5 py-2 rounded-full text-sm font-bold uppercase tracking-widest mb-6">
-                <ClipboardCheck className="h-4 w-4" />
-                Kabinet Kolektiva 2026
-              </div>
-
-              <h1 className="text-5xl lg:text-7xl font-heading font-bold text-white leading-none tracking-tight uppercase">
-                Sistem Absensi
-                <span className="block text-red-500 mt-2">Piket BEM UMS</span>
-              </h1>
-
-              <p className="mt-8 text-lg text-gray-400 leading-relaxed max-w-2xl mx-auto">
-                Platform digital untuk pencatatan kehadiran piket pengurus 
-                Badan Eksekutif Mahasiswa Universitas Muhammadiyah Surakarta. 
-                Isi form, dokumentasikan kegiatan, dan verifikasi kehadiran.
-              </p>
-
-              <div className="mt-12 flex flex-col sm:flex-row gap-4 justify-center">
-                <Link
-                  href="/absen"
-                  className="inline-flex items-center justify-center gap-2 bg-red-600 text-white px-8 py-4 rounded-xl text-lg font-bold uppercase tracking-wide hover:bg-red-700 transition-all shadow-lg shadow-red-600/30 hover:shadow-red-600/50 hover:-translate-y-0.5"
-                >
-                  Mulai Absen
-                  <ArrowRight className="h-5 w-5" />
-                </Link>
-                <Link
-                  href="/jadwal"
-                  className="inline-flex items-center justify-center gap-2 bg-white/5 text-white px-8 py-4 rounded-xl text-lg font-bold uppercase tracking-wide border border-white/10 hover:bg-white/10 hover:border-red-500/30 transition-all hover:-translate-y-0.5"
-                >
-                  <CalendarDays className="h-5 w-5" />
-                  Lihat Jadwal
-                </Link>
-              </div>
+      {/* Main Single-Page Content */}
+      <main className="relative z-10 flex-1 flex flex-col items-center justify-center px-4 sm:px-6 lg:px-8 py-12 lg:py-20 text-center">
+        <div className="max-w-4xl mx-auto flex flex-col items-center">
+          {/* Centered Large Logo */}
+          <div className="mb-8 animate-fade-in flex justify-center">
+            <div className="relative w-64 h-32 sm:w-80 sm:h-40 lg:w-96 lg:h-48">
+              <Image
+                src="/logo-kolektiva.png"
+                alt="Kolektiva Logo"
+                fill
+                className="object-contain drop-shadow-[0_0_50px_rgba(220,38,38,0.35)]"
+                priority
+                unoptimized
+              />
             </div>
           </div>
 
-          {/* Bottom fade */}
-          <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-dark-950 to-transparent" />
-        </section>
-
-        {/* Features Section */}
-        <section className="relative">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
-            <div className="text-center mb-16">
-              <h2 className="text-4xl font-heading font-bold text-white uppercase tracking-tight">Cara Kerja</h2>
-              <div className="w-20 h-1 bg-red-600 mx-auto mt-4 rounded-full" />
-              <p className="mt-6 text-gray-400 text-lg">Proses absensi piket yang mudah dan cepat</p>
-            </div>
-            <div className="grid md:grid-cols-3 gap-8">
-              {/* Step 1 */}
-              <div className="bg-slate-900/50 backdrop-blur-sm p-8 rounded-2xl border border-white/5 hover:border-red-600/30 transition-all group hover:-translate-y-1">
-                <div className="bg-red-600/10 w-14 h-14 rounded-xl flex items-center justify-center mb-6 group-hover:bg-red-600/20 transition-colors">
-                  <Camera className="h-7 w-7 text-red-500" />
-                </div>
-                <div className="text-red-500 font-heading text-sm font-bold uppercase tracking-widest mb-2">Langkah 01</div>
-                <h3 className="text-xl font-heading font-bold text-white uppercase tracking-wide mb-3">
-                  Buka Website
-                </h3>
-                <p className="text-gray-400 leading-relaxed">
-                  Scan QR Code yang tersedia di ruangan BEM atau buka langsung link website ini dari smartphone Anda.
-                </p>
-              </div>
-              {/* Step 2 */}
-              <div className="bg-slate-900/50 backdrop-blur-sm p-8 rounded-2xl border border-white/5 hover:border-red-600/30 transition-all group hover:-translate-y-1">
-                <div className="bg-red-600/10 w-14 h-14 rounded-xl flex items-center justify-center mb-6 group-hover:bg-red-600/20 transition-colors">
-                  <Users className="h-7 w-7 text-red-500" />
-                </div>
-                <div className="text-red-500 font-heading text-sm font-bold uppercase tracking-widest mb-2">Langkah 02</div>
-                <h3 className="text-xl font-heading font-bold text-white uppercase tracking-wide mb-3">
-                  Isi Data & Foto
-                </h3>
-                <p className="text-gray-400 leading-relaxed">
-                  Pilih kementerian, nama Anda, lalu ambil foto selfie dan bukti kegiatan piket yang telah dilakukan.
-                </p>
-              </div>
-              {/* Step 3 */}
-              <div className="bg-slate-900/50 backdrop-blur-sm p-8 rounded-2xl border border-white/5 hover:border-red-600/30 transition-all group hover:-translate-y-1">
-                <div className="bg-red-600/10 w-14 h-14 rounded-xl flex items-center justify-center mb-6 group-hover:bg-red-600/20 transition-colors">
-                  <Shield className="h-7 w-7 text-red-500" />
-                </div>
-                <div className="text-red-500 font-heading text-sm font-bold uppercase tracking-widest mb-2">Langkah 03</div>
-                <h3 className="text-xl font-heading font-bold text-white uppercase tracking-wide mb-3">
-                  Terverifikasi
-                </h3>
-                <p className="text-gray-400 leading-relaxed">
-                  Data absensi tercatat otomatis dan dapat dilihat oleh admin melalui dashboard manajemen.
-                </p>
-              </div>
-            </div>
+          {/* Tagline */}
+          <div className="mb-6 animate-slide-up">
+            <span className="inline-block px-4 py-1.5 rounded-full border border-red-500/40 text-red-400 text-xs sm:text-sm font-heading font-bold uppercase tracking-[0.25em] bg-red-950/20 backdrop-blur-sm shadow-[0_0_15px_rgba(220,38,38,0.15)]">
+              # KABINET KOLEKTIVA 2026
+            </span>
           </div>
-        </section>
 
-        {/* Footer */}
-        <footer className="border-t border-white/5">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-            <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-              <div className="flex items-center gap-3">
-                <Image src="/logo-kolektiva.png" alt="Logo" width={32} height={32} className="h-7 w-auto" />
-                <span className="font-heading font-bold text-white uppercase tracking-wide text-sm">Absensi Piket BEM UMS</span>
-              </div>
-              <p className="text-sm text-gray-500">
-                Kabinet Kolektiva - Badan Eksekutif Mahasiswa Universitas Muhammadiyah Surakarta 2026
-              </p>
-            </div>
+          {/* Main Title */}
+          <h1 className="text-4xl sm:text-6xl lg:text-7xl font-heading font-extrabold text-white uppercase tracking-tight leading-[1.05] animate-slide-up-delay">
+            SISTEM ABSENSI
+            <span className="block text-white mt-1 sm:mt-2">PIKET BEM UMS</span>
+          </h1>
+
+          {/* Subtitle / Description */}
+          <p className="mt-6 text-sm sm:text-base lg:text-lg text-gray-300 leading-relaxed max-w-2xl mx-auto font-body animate-fade-in-delay">
+            Platform digital pencatatan kehadiran piket pengurus Badan Eksekutif Mahasiswa Universitas Muhammadiyah Surakarta.
+          </p>
+
+          {/* CTA Buttons */}
+          <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 animate-slide-up-delay w-full sm:w-auto">
+            <Link
+              href="/absen"
+              className="w-full sm:w-auto group inline-flex items-center justify-center gap-3 bg-red-600 text-white px-8 py-3.5 rounded-xl text-base font-heading font-bold uppercase tracking-wider hover:bg-red-500 transition-all shadow-[0_0_30px_rgba(220,38,38,0.5)] hover:shadow-[0_0_50px_rgba(220,38,38,0.7)] hover:scale-[1.02] active:scale-[0.98]"
+            >
+              MULAI ABSEN
+              <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" />
+            </Link>
+
+            <Link
+              href="/jadwal"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-3 text-white px-8 py-3.5 rounded-xl text-base font-heading font-bold uppercase tracking-wider border border-red-500/60 hover:border-red-400 hover:bg-red-600/15 transition-all hover:scale-[1.02] active:scale-[0.98] shadow-[0_0_15px_rgba(220,38,38,0.1)]"
+            >
+              <CalendarDays className="h-5 w-5 text-red-400" />
+              LIHAT JADWAL
+            </Link>
           </div>
-        </footer>
+        </div>
       </main>
-    </>
+
+      {/* Minimal Footer */}
+      <footer className="relative z-10 py-4 text-center border-t border-red-900/10 bg-black/40">
+        <p className="text-xs text-gray-500 font-body">
+          Kabinet Kolektiva &middot; BEM Universitas Muhammadiyah Surakarta 2026
+        </p>
+      </footer>
+    </div>
   );
 }

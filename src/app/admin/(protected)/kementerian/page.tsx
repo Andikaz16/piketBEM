@@ -10,7 +10,6 @@ import {
   ChevronUp,
   UserPlus,
   Loader2,
-  AlertCircle,
   X,
 } from 'lucide-react';
 
@@ -127,34 +126,35 @@ export default function KementerianPage() {
       {/* Header */}
       <div className="flex items-center justify-between mb-8">
         <div>
-          <h1 className="text-2xl font-bold text-white">Kementerian</h1>
-          <p className="text-gray-400 mt-1">Kelola kementerian dan anggota BEM</p>
+          <h1 className="text-2xl font-heading font-bold text-white uppercase tracking-wider">Kementerian</h1>
+          <div className="divider-gradient w-16 mt-2" />
+          <p className="text-gray-400 mt-3">Kelola kementerian dan anggota BEM</p>
         </div>
         <button
           onClick={() => setShowAddModal(true)}
-          className="inline-flex items-center gap-2 bg-red-600 text-white px-4 py-2.5 rounded-xl font-medium hover:bg-red-700 transition-colors"
+          className="inline-flex items-center gap-2 bg-red-600 text-white px-5 py-2.5 rounded-xl font-bold hover:bg-red-700 transition-all shadow-lg shadow-red-600/20 hover:shadow-red-600/40"
         >
           <Plus className="h-5 w-5" />
-          Tambah Kementerian
+          Tambah
         </button>
       </div>
 
       {/* Kementerian List */}
       <div className="space-y-4">
         {kementerian.map((k) => (
-          <div key={k.id} className="bg-slate-900/60 backdrop-blur-sm rounded-xl border border-white/10 overflow-hidden">
+          <div key={k.id} className="glass-card rounded-2xl overflow-hidden">
             {/* Header */}
             <div
-              className="px-6 py-4 flex items-center justify-between cursor-pointer hover:bg-slate-950/50"
+              className="px-6 py-4 flex items-center justify-between cursor-pointer hover:bg-white/[0.02] transition-colors"
               onClick={() => setExpandedId(expandedId === k.id ? null : k.id)}
             >
               <div className="flex items-center gap-3">
-                <div className="bg-red-500/10 p-2 rounded-lg">
+                <div className="bg-red-600/10 p-2.5 rounded-xl border border-red-600/10">
                   <Building2 className="h-5 w-5 text-red-400" />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-white">{k.nama}</h3>
-                  <p className="text-sm text-gray-400">{k.anggota.length} anggota</p>
+                  <h3 className="font-heading font-bold text-white uppercase tracking-wide">{k.nama}</h3>
+                  <p className="text-sm text-gray-500">{k.anggota.length} anggota</p>
                 </div>
               </div>
               <div className="flex items-center gap-2">
@@ -163,7 +163,7 @@ export default function KementerianPage() {
                     e.stopPropagation();
                     handleDeleteKementerian(k.id);
                   }}
-                  className="p-2 text-red-500 hover:bg-red-50 rounded-lg transition-colors"
+                  className="p-2 text-red-400 hover:bg-red-600/10 rounded-lg transition-colors"
                 >
                   <Trash2 className="h-4 w-4" />
                 </button>
@@ -177,82 +177,84 @@ export default function KementerianPage() {
 
             {/* Expanded Content */}
             {expandedId === k.id && (
-              <div className="border-t border-white/10">
-                <div className="px-6 py-3 bg-slate-950/50 flex items-center justify-between">
-                  <span className="text-sm font-medium text-gray-400 flex items-center gap-2">
+              <div className="border-t border-white/5">
+                <div className="px-6 py-3 flex items-center justify-between" style={{ background: 'rgba(255,255,255,0.02)' }}>
+                  <span className="text-sm font-bold text-gray-400 flex items-center gap-2 uppercase tracking-wider">
                     <Users className="h-4 w-4" />
                     Daftar Anggota
                   </span>
                   <button
                     onClick={() => setAddingAnggota(k.id)}
-                    className="inline-flex items-center gap-1 text-sm text-red-400 hover:text-red-300 font-medium"
+                    className="inline-flex items-center gap-1 text-sm text-red-400 hover:text-red-300 font-bold transition-colors"
                   >
                     <UserPlus className="h-4 w-4" />
-                    Tambah Anggota
+                    Tambah
                   </button>
                 </div>
 
                 {/* Add Anggota Form */}
                 {addingAnggota === k.id && (
-                  <div className="px-6 py-3 bg-red-500/10 border-b border-blue-100 flex flex-wrap gap-3 items-end">
-                    <div className="flex-1 min-w-[200px]">
-                      <label className="block text-xs font-medium text-gray-300 mb-1">Nama Lengkap</label>
-                      <input
-                        type="text"
-                        value={newAnggotaNama}
-                        onChange={(e) => setNewAnggotaNama(e.target.value)}
-                        className="w-full border border-white/10 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-red-500"
-                        placeholder="Nama lengkap anggota"
-                      />
-                    </div>
-                    <div className="flex-1 min-w-[200px]">
-                      <label className="block text-xs font-medium text-gray-300 mb-1">Jabatan</label>
-                      <input
-                        type="text"
-                        value={newAnggotaJabatan}
-                        onChange={(e) => setNewAnggotaJabatan(e.target.value)}
-                        className="w-full border border-white/10 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-red-500"
-                        placeholder="cth: Staff Menteri"
-                      />
-                    </div>
-                    <div className="flex gap-2">
-                      <button
-                        onClick={() => handleAddAnggota(k.id)}
-                        disabled={submitting}
-                        className="bg-red-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-red-700 disabled:opacity-50"
-                      >
-                        Simpan
-                      </button>
-                      <button
-                        onClick={() => setAddingAnggota(null)}
-                        className="bg-slate-900/60 backdrop-blur-sm text-gray-300 px-4 py-2 rounded-lg text-sm font-medium border border-white/10 hover:bg-slate-950/50"
-                      >
-                        Batal
-                      </button>
+                  <div className="px-6 py-4 border-b border-white/5" style={{ background: 'rgba(220,38,38,0.05)' }}>
+                    <div className="flex flex-wrap gap-3 items-end">
+                      <div className="flex-1 min-w-[200px]">
+                        <label className="block text-xs font-bold text-gray-400 mb-1 uppercase tracking-wider">Nama Lengkap</label>
+                        <input
+                          type="text"
+                          value={newAnggotaNama}
+                          onChange={(e) => setNewAnggotaNama(e.target.value)}
+                          className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white placeholder-gray-600 focus:outline-none input-glow"
+                          placeholder="Nama lengkap anggota"
+                        />
+                      </div>
+                      <div className="flex-1 min-w-[200px]">
+                        <label className="block text-xs font-bold text-gray-400 mb-1 uppercase tracking-wider">Jabatan</label>
+                        <input
+                          type="text"
+                          value={newAnggotaJabatan}
+                          onChange={(e) => setNewAnggotaJabatan(e.target.value)}
+                          className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white placeholder-gray-600 focus:outline-none input-glow"
+                          placeholder="cth: Staff Menteri"
+                        />
+                      </div>
+                      <div className="flex gap-2">
+                        <button
+                          onClick={() => handleAddAnggota(k.id)}
+                          disabled={submitting}
+                          className="bg-red-600 text-white px-4 py-2 rounded-lg text-sm font-bold hover:bg-red-700 disabled:opacity-50 transition-all"
+                        >
+                          Simpan
+                        </button>
+                        <button
+                          onClick={() => setAddingAnggota(null)}
+                          className="bg-white/5 text-gray-400 px-4 py-2 rounded-lg text-sm font-bold border border-white/10 hover:bg-white/10 transition-all"
+                        >
+                          Batal
+                        </button>
+                      </div>
                     </div>
                   </div>
                 )}
 
                 {/* Members List */}
                 {k.anggota.length === 0 ? (
-                  <div className="px-6 py-8 text-center">
-                    <Users className="h-8 w-8 text-gray-300 mx-auto mb-2" />
-                    <p className="text-sm text-gray-400">Belum ada anggota</p>
+                  <div className="px-6 py-10 text-center">
+                    <Users className="h-8 w-8 text-gray-600 mx-auto mb-2" />
+                    <p className="text-sm text-gray-500">Belum ada anggota</p>
                   </div>
                 ) : (
-                  <div className="divide-y divide-gray-100">
+                  <div className="divide-y divide-white/5">
                     {k.anggota.map((a, idx) => (
-                      <div key={a.id} className="px-6 py-3 flex items-center justify-between hover:bg-slate-950/50">
+                      <div key={a.id} className="px-6 py-3 flex items-center justify-between hover:bg-white/[0.02] transition-colors">
                         <div className="flex items-center gap-3">
-                          <span className="text-sm text-gray-400 w-6">{idx + 1}.</span>
+                          <span className="text-sm text-gray-600 w-6">{idx + 1}.</span>
                           <div>
                             <p className="text-sm font-medium text-white">{a.namaLengkap}</p>
-                            <p className="text-xs text-gray-400">{a.jabatan}</p>
+                            <p className="text-xs text-gray-500">{a.jabatan}</p>
                           </div>
                         </div>
                         <button
                           onClick={() => handleDeleteAnggota(a.id)}
-                          className="p-1.5 text-red-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                          className="p-1.5 text-gray-500 hover:text-red-400 hover:bg-red-600/10 rounded-lg transition-colors"
                         >
                           <Trash2 className="h-3.5 w-3.5" />
                         </button>
@@ -268,23 +270,23 @@ export default function KementerianPage() {
 
       {/* Add Kementerian Modal */}
       {showAddModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-          <div className="absolute inset-0 bg-black/50" onClick={() => setShowAddModal(false)} />
-          <div className="relative bg-slate-900/60 backdrop-blur-sm rounded-xl max-w-md w-full p-6 shadow-2xl">
-            <div className="flex items-center justify-between mb-4">
-              <h3 className="text-lg font-semibold text-white">Tambah Kementerian</h3>
-              <button onClick={() => setShowAddModal(false)} className="text-gray-400 hover:text-gray-300">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 animate-fade-in">
+          <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setShowAddModal(false)} />
+          <div className="relative glass-card rounded-2xl max-w-md w-full p-6 shadow-2xl animate-scale-in">
+            <div className="flex items-center justify-between mb-6">
+              <h3 className="text-lg font-heading font-bold text-white uppercase tracking-wider">Tambah Kementerian</h3>
+              <button onClick={() => setShowAddModal(false)} className="text-gray-400 hover:text-white p-1 rounded-lg hover:bg-white/10 transition-all">
                 <X className="h-5 w-5" />
               </button>
             </div>
             <div className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Nama Kementerian</label>
+                <label className="block text-sm font-bold text-gray-300 mb-1.5 uppercase tracking-wider">Nama Kementerian</label>
                 <input
                   type="text"
                   value={newNama}
                   onChange={(e) => setNewNama(e.target.value)}
-                  className="w-full border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-red-500"
+                  className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-600 focus:outline-none input-glow transition-all"
                   placeholder="cth: Hubungan Masyarakat"
                 />
               </div>
@@ -292,13 +294,13 @@ export default function KementerianPage() {
                 <button
                   onClick={handleAddKementerian}
                   disabled={submitting || !newNama.trim()}
-                  className="flex-1 bg-red-600 text-white py-2.5 rounded-xl font-medium hover:bg-red-700 disabled:opacity-50"
+                  className="flex-1 bg-red-600 text-white py-2.5 rounded-xl font-bold hover:bg-red-700 disabled:opacity-50 transition-all"
                 >
                   {submitting ? 'Menyimpan...' : 'Simpan'}
                 </button>
                 <button
                   onClick={() => setShowAddModal(false)}
-                  className="flex-1 bg-gray-100 text-gray-700 py-2.5 rounded-xl font-medium hover:bg-gray-200"
+                  className="flex-1 bg-white/5 text-gray-400 py-2.5 rounded-xl font-bold border border-white/10 hover:bg-white/10 transition-all"
                 >
                   Batal
                 </button>

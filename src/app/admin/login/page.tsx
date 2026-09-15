@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
-import { Shield, Loader2, AlertCircle, Eye, EyeOff } from 'lucide-react';
+import { Loader2, AlertCircle, Eye, EyeOff, Lock } from 'lucide-react';
 
 export default function AdminLoginPage() {
   const router = useRouter();
@@ -39,25 +39,29 @@ export default function AdminLoginPage() {
   };
 
   return (
-    <main className="min-h-screen bg-slate-950 flex items-center justify-center px-4 relative overflow-hidden">
-      {/* Background glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-red-600/5 rounded-full blur-3xl" />
+    <main className="min-h-screen flex items-center justify-center px-4 relative overflow-hidden">
+      {/* Background orbs */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-red-600/8 rounded-full blur-[120px] animate-float-slow" />
+      <div className="absolute top-1/3 right-1/4 w-[300px] h-[300px] bg-red-800/5 rounded-full blur-[100px] animate-float-slower" />
 
-      <div className="w-full max-w-md relative z-10">
+      {/* Grid overlay */}
+      <div className="absolute inset-0 opacity-[0.02]" style={{ backgroundImage: 'linear-gradient(rgba(220,38,38,0.3) 1px, transparent 1px), linear-gradient(90deg, rgba(220,38,38,0.3) 1px, transparent 1px)', backgroundSize: '60px 60px' }} />
+
+      <div className="w-full max-w-md relative z-10 animate-scale-in">
         {/* Logo */}
-        <div className="text-center mb-8">
-          <div className="flex justify-center mb-4">
-            <Image src="/logo-kolektiva.png" alt="Logo Kolektiva" width={800} height={300} className="h-16 w-auto" unoptimized />
+        <div className="text-center mb-10">
+          <div className="flex justify-center mb-5">
+            <Image src="/logo-kolektiva.png" alt="Logo Kolektiva" width={800} height={300} className="h-16 w-auto drop-shadow-[0_0_20px_rgba(220,38,38,0.3)]" unoptimized />
           </div>
-          <h1 className="text-3xl font-heading font-bold text-white uppercase tracking-tight">Admin Login</h1>
-          <div className="w-12 h-1 bg-red-600 mx-auto mt-3 rounded-full" />
+          <h1 className="text-4xl font-heading font-bold text-white uppercase tracking-tight">Admin Login</h1>
+          <div className="divider-gradient w-16 mx-auto mt-4" />
           <p className="text-gray-500 mt-4 text-sm">Masuk ke dashboard admin BEM UMS</p>
         </div>
 
         {/* Form */}
         <form
           onSubmit={handleSubmit}
-          className="bg-slate-900/60 backdrop-blur-sm rounded-2xl border border-white/5 p-6 space-y-5"
+          className="glass-card rounded-2xl p-8 space-y-6"
         >
           {error && (
             <div className="bg-red-600/10 border border-red-600/20 rounded-xl px-4 py-3 flex items-center gap-3">
@@ -67,7 +71,7 @@ export default function AdminLoginPage() {
           )}
 
           <div>
-            <label className="block text-sm font-semibold text-gray-300 mb-1.5 uppercase tracking-wide">
+            <label className="block text-sm font-bold text-gray-300 mb-2 uppercase tracking-wider">
               Username
             </label>
             <input
@@ -76,12 +80,12 @@ export default function AdminLoginPage() {
               onChange={(e) => setUsername(e.target.value)}
               placeholder="Masukkan username"
               required
-              className="w-full bg-slate-800 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
+              className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-600 focus:outline-none input-glow transition-all"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-semibold text-gray-300 mb-1.5 uppercase tracking-wide">
+            <label className="block text-sm font-bold text-gray-300 mb-2 uppercase tracking-wider">
               Password
             </label>
             <div className="relative">
@@ -91,18 +95,14 @@ export default function AdminLoginPage() {
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="Masukkan password"
                 required
-                className="w-full bg-slate-800 border border-white/10 rounded-xl px-4 py-3 pr-12 text-white placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
+                className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 pr-12 text-white placeholder-gray-600 focus:outline-none input-glow transition-all"
               />
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-300"
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-300 transition-colors"
               >
-                {showPassword ? (
-                  <EyeOff className="h-5 w-5" />
-                ) : (
-                  <Eye className="h-5 w-5" />
-                )}
+                {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
               </button>
             </div>
           </div>
@@ -110,7 +110,7 @@ export default function AdminLoginPage() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-red-600 text-white py-3 rounded-xl font-bold uppercase tracking-wide hover:bg-red-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 shadow-lg shadow-red-600/20"
+            className="w-full bg-red-600 text-white py-3.5 rounded-xl font-bold uppercase tracking-wider hover:bg-red-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(220,38,38,0.2)] hover:shadow-[0_0_40px_rgba(220,38,38,0.4)]"
           >
             {loading ? (
               <>
@@ -118,13 +118,16 @@ export default function AdminLoginPage() {
                 Memproses...
               </>
             ) : (
-              'Masuk'
+              <>
+                <Lock className="h-5 w-5" />
+                Masuk
+              </>
             )}
           </button>
         </form>
 
-        <p className="text-center text-xs text-gray-600 mt-6">
-          Absensi Piket BEM UMS - Kabinet Kolektiva 2026
+        <p className="text-center text-xs text-gray-600 mt-8">
+          Absensi Piket BEM UMS &middot; Kabinet Kolektiva 2026
         </p>
       </div>
     </main>

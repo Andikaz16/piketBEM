@@ -4,7 +4,6 @@ import { useState, useEffect } from 'react';
 import PhotoModal from '@/components/PhotoModal';
 import { formatTanggal } from '@/lib/utils';
 import {
-  History,
   Search,
   Eye,
   Clock,
@@ -12,6 +11,7 @@ import {
   Loader2,
   ChevronDown,
   ClipboardCheck,
+  RotateCcw,
 } from 'lucide-react';
 
 interface AbsensiItem {
@@ -76,15 +76,16 @@ export default function RiwayatPage() {
     <div>
       {/* Header */}
       <div className="mb-8">
-        <h1 className="text-2xl font-bold text-white">Riwayat Absensi</h1>
-        <p className="text-gray-400 mt-1">Lihat seluruh riwayat absensi piket</p>
+        <h1 className="text-2xl font-heading font-bold text-white uppercase tracking-wider">Riwayat Absensi</h1>
+        <div className="divider-gradient w-16 mt-2" />
+        <p className="text-gray-400 mt-3">Lihat seluruh riwayat absensi piket</p>
       </div>
 
       {/* Filters */}
-      <div className="bg-slate-900/60 backdrop-blur-sm rounded-xl border border-white/10 p-4 mb-6">
+      <div className="glass-card rounded-2xl p-5 mb-6">
         <div className="flex flex-wrap gap-4 items-end">
           <div className="flex-1 min-w-[200px]">
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-xs font-bold text-gray-400 mb-1.5 uppercase tracking-wider">
               <Calendar className="h-3.5 w-3.5 inline mr-1" />
               Tanggal
             </label>
@@ -92,11 +93,11 @@ export default function RiwayatPage() {
               type="date"
               value={filterTanggal}
               onChange={(e) => setFilterTanggal(e.target.value)}
-              className="w-full border border-white/10 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-red-500"
+              className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2.5 text-sm text-white focus:outline-none input-glow transition-all"
             />
           </div>
           <div className="flex-1 min-w-[200px]">
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-xs font-bold text-gray-400 mb-1.5 uppercase tracking-wider">
               <Search className="h-3.5 w-3.5 inline mr-1" />
               Kementerian
             </label>
@@ -104,68 +105,71 @@ export default function RiwayatPage() {
               <select
                 value={filterKementerian}
                 onChange={(e) => setFilterKementerian(e.target.value)}
-                className="w-full appearance-none border border-white/10 rounded-lg px-3 py-2 pr-8 text-sm focus:outline-none focus:ring-2 focus:ring-red-500"
+                className="w-full appearance-none bg-white/5 border border-white/10 rounded-lg px-3 py-2.5 pr-8 text-sm text-white focus:outline-none input-glow transition-all"
               >
-                <option value="">Semua Kementerian</option>
+                <option value="" className="bg-slate-900">Semua Kementerian</option>
                 {kementerian.map((k) => (
-                  <option key={k.id} value={k.id.toString()}>
+                  <option key={k.id} value={k.id.toString()} className="bg-slate-900">
                     {k.nama}
                   </option>
                 ))}
               </select>
-              <ChevronDown className="absolute right-2 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400 pointer-events-none" />
+              <ChevronDown className="absolute right-2 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-500 pointer-events-none" />
             </div>
           </div>
           <button
             onClick={handleReset}
-            className="px-4 py-2 text-sm font-medium text-gray-300 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors"
+            className="inline-flex items-center gap-1.5 px-4 py-2.5 text-sm font-bold text-gray-400 bg-white/5 border border-white/10 rounded-lg hover:bg-white/10 transition-all"
           >
-            Reset Filter
+            <RotateCcw className="h-3.5 w-3.5" />
+            Reset
           </button>
         </div>
       </div>
 
       {/* Table */}
-      <div className="bg-slate-900/60 backdrop-blur-sm rounded-xl border border-white/10 overflow-hidden">
+      <div className="glass-card rounded-2xl overflow-hidden">
         {loading ? (
           <div className="flex items-center justify-center h-64">
             <Loader2 className="h-8 w-8 animate-spin text-red-400" />
           </div>
         ) : absensi.length === 0 ? (
-          <div className="px-6 py-12 text-center">
-            <ClipboardCheck className="h-12 w-12 text-gray-300 mx-auto mb-3" />
+          <div className="px-6 py-16 text-center">
+            <div className="bg-white/5 w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-4">
+              <ClipboardCheck className="h-8 w-8 text-gray-500" />
+            </div>
             <p className="text-gray-400 font-medium">Tidak ada data absensi</p>
-            <p className="text-gray-400 text-sm mt-1">Coba ubah filter untuk melihat data lainnya</p>
+            <p className="text-gray-600 text-sm mt-1">Coba ubah filter untuk melihat data lainnya</p>
           </div>
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full">
               <thead>
-                <tr className="bg-slate-950/50">
-                  <th className="px-4 py-3 text-left text-xs font-semibold text-gray-400 uppercase tracking-wider">No</th>
-                  <th className="px-4 py-3 text-left text-xs font-semibold text-gray-400 uppercase tracking-wider">Nama</th>
-                  <th className="px-4 py-3 text-left text-xs font-semibold text-gray-400 uppercase tracking-wider">Kementerian</th>
-                  <th className="px-4 py-3 text-left text-xs font-semibold text-gray-400 uppercase tracking-wider">Jabatan</th>
-                  <th className="px-4 py-3 text-left text-xs font-semibold text-gray-400 uppercase tracking-wider">Tanggal</th>
-                  <th className="px-4 py-3 text-left text-xs font-semibold text-gray-400 uppercase tracking-wider">Jam</th>
-                  <th className="px-4 py-3 text-left text-xs font-semibold text-gray-400 uppercase tracking-wider">Keterangan</th>
-                  <th className="px-4 py-3 text-left text-xs font-semibold text-gray-400 uppercase tracking-wider">Foto</th>
+                <tr className="border-b border-white/5">
+                  <th className="px-4 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">No</th>
+                  <th className="px-4 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Nama</th>
+                  <th className="px-4 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Kementerian</th>
+                  <th className="px-4 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Jabatan</th>
+                  <th className="px-4 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Tanggal</th>
+                  <th className="px-4 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Jam</th>
+                  <th className="px-4 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Keterangan</th>
+                  <th className="px-4 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Foto</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-gray-200">
+              <tbody className="divide-y divide-white/5">
                 {absensi.map((item, index) => (
-                  <tr key={item.id} className="hover:bg-slate-950/50">
-                    <td className="px-4 py-3 text-sm text-gray-400">{index + 1}</td>
+                  <tr key={item.id} className="hover:bg-white/[0.02] transition-colors">
+                    <td className="px-4 py-3 text-sm text-gray-500">{index + 1}</td>
                     <td className="px-4 py-3">
                       <span className="text-sm font-medium text-white">{item.anggota.namaLengkap}</span>
                     </td>
                     <td className="px-4 py-3">
-                      <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-500/10 text-red-300">
+                      <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-red-600/10 text-red-400 border border-red-600/10">
                         {item.anggota.kementerian.nama}
                       </span>
                     </td>
                     <td className="px-4 py-3 text-sm text-gray-400">{item.anggota.jabatan}</td>
-                    <td className="px-4 py-3 text-sm text-gray-700">
+                    <td className="px-4 py-3 text-sm text-gray-400">
                       {new Date(item.tanggal).toLocaleDateString('id-ID', {
                         day: 'numeric',
                         month: 'short',
@@ -173,12 +177,12 @@ export default function RiwayatPage() {
                       })}
                     </td>
                     <td className="px-4 py-3">
-                      <span className="inline-flex items-center gap-1 text-sm text-gray-700">
-                        <Clock className="h-3.5 w-3.5 text-gray-400" />
+                      <span className="inline-flex items-center gap-1 text-sm text-gray-400">
+                        <Clock className="h-3.5 w-3.5 text-gray-500" />
                         {item.jamMasuk}
                       </span>
                     </td>
-                    <td className="px-4 py-3 text-sm text-gray-400 max-w-[200px] truncate">
+                    <td className="px-4 py-3 text-sm text-gray-500 max-w-[200px] truncate">
                       {item.keterangan || '-'}
                     </td>
                     <td className="px-4 py-3">
@@ -187,7 +191,7 @@ export default function RiwayatPage() {
                           onClick={() =>
                             setPhotoModal({ isOpen: true, url: item.fotoSelfie, title: 'Foto Selfie' })
                           }
-                          className="inline-flex items-center gap-1 px-2 py-1 text-xs font-medium text-red-300 bg-red-500/10 rounded-md hover:bg-blue-100 transition-colors"
+                          className="inline-flex items-center gap-1 px-2.5 py-1 text-xs font-bold text-red-400 bg-red-600/10 rounded-lg hover:bg-red-600/20 transition-colors border border-red-600/10"
                         >
                           <Eye className="h-3 w-3" />
                           Selfie
@@ -196,7 +200,7 @@ export default function RiwayatPage() {
                           onClick={() =>
                             setPhotoModal({ isOpen: true, url: item.fotoKegiatan, title: 'Foto Kegiatan' })
                           }
-                          className="inline-flex items-center gap-1 px-2 py-1 text-xs font-medium text-green-700 bg-green-50 rounded-md hover:bg-green-100 transition-colors"
+                          className="inline-flex items-center gap-1 px-2.5 py-1 text-xs font-bold text-gray-400 bg-white/5 rounded-lg hover:bg-white/10 transition-colors border border-white/5"
                         >
                           <Eye className="h-3 w-3" />
                           Kegiatan
@@ -212,7 +216,7 @@ export default function RiwayatPage() {
 
         {/* Count */}
         {!loading && absensi.length > 0 && (
-          <div className="px-4 py-3 bg-slate-950/50 border-t border-white/10 text-sm text-gray-400">
+          <div className="px-5 py-3 border-t border-white/5 text-sm text-gray-500 font-medium">
             Menampilkan {absensi.length} data absensi
           </div>
         )}

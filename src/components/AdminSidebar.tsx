@@ -31,7 +31,7 @@ export default function AdminSidebar() {
       {/* Mobile toggle */}
       <button
         onClick={() => setIsMobileOpen(!isMobileOpen)}
-        className="lg:hidden fixed top-4 left-4 z-50 bg-slate-900 p-2 rounded-lg shadow-md border border-white/10 text-white"
+        className="lg:hidden fixed top-4 left-4 z-50 bg-slate-900/90 backdrop-blur-xl p-2.5 rounded-xl shadow-lg border border-white/10 text-white hover:bg-slate-800 transition-all"
       >
         {isMobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
       </button>
@@ -39,25 +39,31 @@ export default function AdminSidebar() {
       {/* Overlay */}
       {isMobileOpen && (
         <div
-          className="lg:hidden fixed inset-0 bg-black/70 z-40 backdrop-blur-sm"
+          className="lg:hidden fixed inset-0 bg-black/60 backdrop-blur-sm z-40"
           onClick={() => setIsMobileOpen(false)}
         />
       )}
 
       {/* Sidebar */}
       <aside
-        className={`fixed top-0 left-0 h-full w-64 bg-slate-950/95 backdrop-blur-xl border-r border-red-900/30 z-40 transform transition-transform duration-300 ease-in-out ${
+        className={`fixed top-0 left-0 h-full w-64 z-40 transform transition-transform duration-300 ease-in-out shadow-2xl lg:translate-x-0 lg:static lg:z-auto ${
           isMobileOpen ? 'translate-x-0' : '-translate-x-full'
-        } lg:translate-x-0 lg:static lg:z-auto shadow-2xl`}
+        }`}
+        style={{ background: 'rgba(2, 6, 23, 0.95)', backdropFilter: 'blur(20px)', borderRight: '1px solid rgba(255,255,255,0.05)' }}
       >
+        {/* Top glow */}
+        <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-red-600/40 to-transparent" />
+
         <div className="flex flex-col h-full">
           {/* Header */}
           <div className="px-6 py-6 border-b border-white/5">
             <div className="flex items-center gap-3">
-              <Image src="/logo-kolektiva.png" alt="Logo" width={40} height={40} className="h-10 w-auto" unoptimized />
+              <div className="relative">
+                <Image src="/logo-kolektiva.png" alt="Logo" width={40} height={40} className="h-10 w-auto" unoptimized />
+              </div>
               <div>
-                <h2 className="text-lg font-heading font-bold text-white tracking-wide uppercase">Admin Panel</h2>
-                <p className="text-[10px] font-bold tracking-widest text-red-500 uppercase">BEM UMS 2026</p>
+                <h2 className="text-lg font-heading font-bold text-white tracking-wider uppercase">Admin Panel</h2>
+                <p className="text-[10px] font-bold tracking-[0.2em] text-red-400 uppercase">BEM UMS 2026</p>
               </div>
             </div>
           </div>
@@ -72,13 +78,16 @@ export default function AdminSidebar() {
                   key={item.href}
                   href={item.href}
                   onClick={() => setIsMobileOpen(false)}
-                  className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-bold uppercase tracking-wide transition-all ${
+                  className={`relative flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-bold uppercase tracking-wider transition-all ${
                     isActive
-                      ? 'bg-red-600/20 text-red-400 border border-red-600/30 shadow-inner'
-                      : 'text-gray-400 hover:bg-white/5 hover:text-white border border-transparent'
+                      ? 'bg-red-600/15 text-red-400 border border-red-600/20'
+                      : 'text-gray-500 hover:bg-white/5 hover:text-gray-300 border border-transparent'
                   }`}
                 >
-                  <Icon className={`h-5 w-5 ${isActive ? 'text-red-400' : 'text-gray-500'}`} />
+                  {isActive && (
+                    <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-6 bg-red-500 rounded-r-full" />
+                  )}
+                  <Icon className={`h-5 w-5 ${isActive ? 'text-red-400' : ''}`} />
                   {item.label}
                 </Link>
               );
@@ -89,7 +98,7 @@ export default function AdminSidebar() {
           <div className="px-4 py-6 border-t border-white/5">
             <button
               onClick={() => signOut({ callbackUrl: '/admin/login' })}
-              className="flex items-center justify-center gap-3 px-4 py-3 rounded-xl text-sm font-bold uppercase tracking-wide text-white bg-red-600 hover:bg-red-700 transition-all shadow-lg shadow-red-600/20 w-full"
+              className="flex items-center justify-center gap-3 px-4 py-3 rounded-xl text-sm font-bold uppercase tracking-wider text-white bg-red-600 hover:bg-red-700 transition-all shadow-lg shadow-red-600/20 hover:shadow-red-600/40 w-full"
             >
               <LogOut className="h-5 w-5" />
               Keluar

@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Calendar, Plus, Trash2, Loader2, X, ChevronDown, User, Star } from 'lucide-react';
+import { Plus, Trash2, Loader2, X, ChevronDown, User, Star } from 'lucide-react';
 
 interface JadwalItem {
   id: number;
@@ -105,15 +105,16 @@ export default function JadwalPage() {
     <div>
       <div className="flex items-center justify-between mb-8">
         <div>
-          <h1 className="text-2xl font-bold text-white">Jadwal Piket</h1>
-          <p className="text-gray-400 mt-1">Atur jadwal piket anggota harian</p>
+          <h1 className="text-2xl font-heading font-bold text-white uppercase tracking-wider">Jadwal Piket</h1>
+          <div className="divider-gradient w-16 mt-2" />
+          <p className="text-gray-400 mt-3">Atur jadwal piket anggota harian</p>
         </div>
         <button
           onClick={() => setShowAddModal(true)}
-          className="inline-flex items-center gap-2 bg-red-600 text-white px-4 py-2.5 rounded-xl font-medium hover:bg-red-700 transition-colors"
+          className="inline-flex items-center gap-2 bg-red-600 text-white px-5 py-2.5 rounded-xl font-bold hover:bg-red-700 transition-all shadow-lg shadow-red-600/20 hover:shadow-red-600/40"
         >
           <Plus className="h-5 w-5" />
-          Tambah Jadwal
+          Tambah
         </button>
       </div>
 
@@ -121,20 +122,20 @@ export default function JadwalPage() {
         {HARI_LIST.map((hari) => {
           const items = getJadwalByHari(hari);
           return (
-            <div key={hari} className="bg-slate-900/60 backdrop-blur-sm rounded-xl border border-white/10 overflow-hidden flex flex-col h-full">
-              <div className="px-4 py-3 bg-slate-950/50 border-b border-white/10">
-                <h3 className="font-semibold text-white text-center">{hari}</h3>
-                <p className="text-xs text-center text-gray-400 mt-0.5">{items.length} Fungsionaris</p>
+            <div key={hari} className="glass-card rounded-2xl overflow-hidden flex flex-col h-full">
+              <div className="px-4 py-3 border-b border-white/5" style={{ background: 'linear-gradient(135deg, rgba(153,27,27,0.3), rgba(220,38,38,0.15))' }}>
+                <h3 className="font-heading font-bold text-white text-center uppercase tracking-wider">{hari}</h3>
+                <p className="text-xs text-center text-gray-400 mt-0.5 font-medium">{items.length} Fungsionaris</p>
               </div>
               <div className="p-3 space-y-2 flex-1">
                 {items.length === 0 ? (
-                  <p className="text-sm text-gray-400 text-center py-4">Belum ada jadwal</p>
+                  <p className="text-sm text-gray-600 text-center py-4">Belum ada jadwal</p>
                 ) : (
                   items.map((item) => (
                     <div
                       key={item.id}
-                      className={`flex items-start justify-between rounded-lg px-3 py-2 border ${
-                        item.isKoordinator ? 'bg-red-500/10 border-red-500/30' : 'bg-slate-950/50 border-white/10'
+                      className={`flex items-start justify-between rounded-xl px-3 py-2 border transition-all ${
+                        item.isKoordinator ? 'bg-red-600/10 border-red-600/20' : 'bg-white/[0.02] border-white/5 hover:border-white/10'
                       }`}
                     >
                       <div>
@@ -142,17 +143,17 @@ export default function JadwalPage() {
                           {item.isKoordinator ? (
                             <Star className="h-3.5 w-3.5 text-red-400 shrink-0" />
                           ) : (
-                            <User className="h-3.5 w-3.5 text-gray-400 shrink-0" />
+                            <User className="h-3.5 w-3.5 text-gray-500 shrink-0" />
                           )}
-                          <span className={`text-sm font-medium ${item.isKoordinator ? 'text-blue-800' : 'text-gray-800'}`}>
+                          <span className={`text-sm font-medium ${item.isKoordinator ? 'text-red-300' : 'text-gray-300'}`}>
                             {item.anggota.namaLengkap}
                           </span>
                         </div>
-                        <p className="text-[11px] text-gray-400 mt-0.5 ml-5">{item.anggota.kementerian.nama}</p>
+                        <p className="text-[11px] text-gray-600 mt-0.5 ml-5">{item.anggota.kementerian.nama}</p>
                       </div>
                       <button
                         onClick={() => handleDelete(item.id)}
-                        className="text-red-400 hover:text-red-600 p-1 shrink-0"
+                        className="text-gray-600 hover:text-red-400 p-1 shrink-0 transition-colors"
                       >
                         <Trash2 className="h-3.5 w-3.5" />
                       </button>
@@ -166,61 +167,61 @@ export default function JadwalPage() {
       </div>
 
       {showAddModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-          <div className="absolute inset-0 bg-black/50" onClick={() => setShowAddModal(false)} />
-          <div className="relative bg-slate-900/60 backdrop-blur-sm rounded-xl max-w-md w-full p-6 shadow-2xl">
-            <div className="flex items-center justify-between mb-4">
-              <h3 className="text-lg font-semibold text-white">Tambah Jadwal Piket</h3>
-              <button onClick={() => setShowAddModal(false)} className="text-gray-400 hover:text-gray-300">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 animate-fade-in">
+          <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setShowAddModal(false)} />
+          <div className="relative glass-card rounded-2xl max-w-md w-full p-6 shadow-2xl animate-scale-in">
+            <div className="flex items-center justify-between mb-6">
+              <h3 className="text-lg font-heading font-bold text-white uppercase tracking-wider">Tambah Jadwal Piket</h3>
+              <button onClick={() => setShowAddModal(false)} className="text-gray-400 hover:text-white p-1 rounded-lg hover:bg-white/10 transition-all">
                 <X className="h-5 w-5" />
               </button>
             </div>
             <div className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Pilih Anggota</label>
+                <label className="block text-sm font-bold text-gray-300 mb-1.5 uppercase tracking-wider">Pilih Anggota</label>
                 <div className="relative">
                   <select
                     value={selectedAnggota}
                     onChange={(e) => setSelectedAnggota(e.target.value)}
-                    className="w-full appearance-none border border-white/10 rounded-xl px-4 py-3 pr-10 focus:outline-none focus:ring-2 focus:ring-red-500"
+                    className="w-full appearance-none bg-white/5 border border-white/10 rounded-xl px-4 py-3 pr-10 text-white focus:outline-none input-glow transition-all"
                   >
-                    <option value="">Cari Anggota...</option>
+                    <option value="" className="bg-slate-900">Cari Anggota...</option>
                     {anggota.map((a) => (
-                      <option key={a.id} value={a.id.toString()}>
+                      <option key={a.id} value={a.id.toString()} className="bg-slate-900">
                         {a.namaLengkap} - {a.kementerian?.nama || ''}
                       </option>
                     ))}
                   </select>
-                  <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400 pointer-events-none" />
+                  <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-500 pointer-events-none" />
                 </div>
               </div>
-              
+
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Hari</label>
+                <label className="block text-sm font-bold text-gray-300 mb-1.5 uppercase tracking-wider">Hari</label>
                 <div className="relative">
                   <select
                     value={selectedHari}
                     onChange={(e) => setSelectedHari(e.target.value)}
-                    className="w-full appearance-none border border-white/10 rounded-xl px-4 py-3 pr-10 focus:outline-none focus:ring-2 focus:ring-red-500"
+                    className="w-full appearance-none bg-white/5 border border-white/10 rounded-xl px-4 py-3 pr-10 text-white focus:outline-none input-glow transition-all"
                   >
-                    <option value="">Pilih Hari</option>
+                    <option value="" className="bg-slate-900">Pilih Hari</option>
                     {HARI_LIST.map((h) => (
-                      <option key={h} value={h}>{h}</option>
+                      <option key={h} value={h} className="bg-slate-900">{h}</option>
                     ))}
                   </select>
-                  <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400 pointer-events-none" />
+                  <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-500 pointer-events-none" />
                 </div>
               </div>
 
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-3">
                 <input
                   type="checkbox"
                   id="isKoordinator"
                   checked={isKoordinator}
                   onChange={(e) => setIsKoordinator(e.target.checked)}
-                  className="rounded border-white/10 text-red-400 focus:ring-red-500"
+                  className="w-4 h-4 rounded border-white/20 text-red-500 focus:ring-red-500 bg-white/5"
                 />
-                <label htmlFor="isKoordinator" className="text-sm font-medium text-gray-700">
+                <label htmlFor="isKoordinator" className="text-sm font-medium text-gray-300">
                   Tandai sebagai Koordinator
                 </label>
               </div>
@@ -229,13 +230,13 @@ export default function JadwalPage() {
                 <button
                   onClick={handleAdd}
                   disabled={submitting || !selectedAnggota || !selectedHari}
-                  className="flex-1 bg-red-600 text-white py-2.5 rounded-xl font-medium hover:bg-red-700 disabled:opacity-50"
+                  className="flex-1 bg-red-600 text-white py-2.5 rounded-xl font-bold hover:bg-red-700 disabled:opacity-50 transition-all"
                 >
                   {submitting ? 'Menyimpan...' : 'Simpan'}
                 </button>
                 <button
                   onClick={() => setShowAddModal(false)}
-                  className="flex-1 bg-gray-100 text-gray-700 py-2.5 rounded-xl font-medium hover:bg-gray-200"
+                  className="flex-1 bg-white/5 text-gray-400 py-2.5 rounded-xl font-bold border border-white/10 hover:bg-white/10 transition-all"
                 >
                   Batal
                 </button>

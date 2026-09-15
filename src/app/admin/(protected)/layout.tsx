@@ -18,10 +18,10 @@ function AdminLayoutContent({ children }: { children: React.ReactNode }) {
 
   if (status === 'loading') {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="min-h-screen flex items-center justify-center" style={{ background: 'rgba(0,0,0,0.4)' }}>
         <div className="text-center">
-          <Loader2 className="h-8 w-8 animate-spin text-blue-600 mx-auto" />
-          <p className="text-gray-500 mt-3">Memuat...</p>
+          <Loader2 className="h-8 w-8 animate-spin text-red-400 mx-auto" />
+          <p className="text-gray-500 mt-3 font-medium">Memuat...</p>
         </div>
       </div>
     );

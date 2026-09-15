@@ -1,12 +1,19 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
+
+export const dynamic = 'force-dynamic';
 
 export async function GET() {
   try {
     const jadwal = await prisma.jadwalPiket.findMany({
       include: {
         anggota: {
-          select: { id: true, namaLengkap: true, jabatan: true, kementerian: { select: { nama: true } } },
+          select: {
+            id: true,
+            namaLengkap: true,
+            jabatan: true,
+            kementerian: { select: { nama: true } },
+          },
         },
       },
       orderBy: [
@@ -16,9 +23,6 @@ export async function GET() {
       ],
     });
 
-    const hariOrder = ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu', 'Minggu'];
-    jadwal.sort((a, b) => hariOrder.indexOf(a.hari) - hariOrder.indexOf(b.hari));
-
     return NextResponse.json(jadwal);
   } catch (error) {
     console.error('Error fetching jadwal:', error);
@@ -26,7 +30,7 @@ export async function GET() {
   }
 }
 
-export async function POST(request: NextRequest) {
+export async function POST(request: Request) {
   try {
     const body = await request.json();
     const { anggotaId, hari, isKoordinator } = body;
@@ -55,7 +59,7 @@ export async function POST(request: NextRequest) {
   }
 }
 
-export async function DELETE(request: NextRequest) {
+export async function DELETE(request: Request) {
   try {
     const { searchParams } = new URL(request.url);
     const id = searchParams.get('id');
@@ -67,4 +71,3 @@ export async function DELETE(request: NextRequest) {
     return NextResponse.json({ error: 'Gagal menghapus jadwal' }, { status: 500 });
   }
 }
-
