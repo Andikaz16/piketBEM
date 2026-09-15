@@ -12,7 +12,6 @@ model Kementerian {
   nama      String    @unique
   createdAt DateTime  @default(now()) @map("created_at")
   anggota   Anggota[]
-  jadwal    JadwalPiket[]
 
   @@map("kementerian")
 }
@@ -24,6 +23,7 @@ model Anggota {
   kementerianId  Int          @map("kementerian_id")
   kementerian    Kementerian  @relation(fields: [kementerianId], references: [id], onDelete: Cascade)
   absensi        Absensi[]
+  jadwal         JadwalPiket[]
   createdAt      DateTime     @default(now()) @map("created_at")
 
   @@map("anggota")
@@ -45,12 +45,13 @@ model Absensi {
 
 model JadwalPiket {
   id             Int          @id @default(autoincrement())
-  kementerianId  Int          @map("kementerian_id")
-  kementerian    Kementerian  @relation(fields: [kementerianId], references: [id], onDelete: Cascade)
+  anggotaId      Int          @map("anggota_id")
+  anggota        Anggota      @relation(fields: [anggotaId], references: [id], onDelete: Cascade)
   hari           String
+  isKoordinator  Boolean      @default(false) @map("is_koordinator")
   createdAt      DateTime     @default(now()) @map("created_at")
 
-  @@unique([kementerianId, hari])
+  @@unique([anggotaId, hari])
   @@map("jadwal_piket")
 }
 

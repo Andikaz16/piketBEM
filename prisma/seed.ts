@@ -116,27 +116,102 @@ async function main() {
     console.log(`Kementerian "${created.nama}" berhasil di-seed.`);
   }
 
-  // Seed Jadwal Piket default
-  const hariList = ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat'];
-  const kementerianList = await prisma.kementerian.findMany({
-    where: { nama: { not: 'Pimpinan Umum' } },
-  });
+  // Seed Jadwal Piket
+  const jadwal = [
+    {
+      hari: 'Senin',
+      koordinator: ['Bramantyo Ikhsanul Hakim'],
+      anggota: [
+        'Salsa Dwi Anggraini',
+        'Hafidh Dzaky Hananta',
+        'Siti Rusmiati',
+        'Riezky Prayudha Anggito Prabowo',
+        'Ahmad Muwaffiqul Choir',
+        'Astriana Dwi Yuliyanti',
+        'Ridwan Dimas Arya Rangga Pangestu',
+        'Rafa Hanif Maulida',
+      ],
+    },
+    {
+      hari: 'Selasa',
+      koordinator: ['Burhanuddin Alhakim'],
+      anggota: [
+        'Sherlina Devi Oktavia',
+        'Muhammad Rifqi Amani',
+        'Anggris Bagus Eka Saputra',
+        'Jody Julian Putra Caesar',
+        'Arkan Ramadhani Inayatullah',
+        'Shilvy Ameilina Putri',
+        'Chandra Nur Prasetya',
+        'Jordan Purwoko Putro',
+      ],
+    },
+    {
+      hari: 'Rabu',
+      koordinator: ['Sheila Mei Lisa', 'Puput Rahmawati'],
+      anggota: [
+        'Daffa Alfarozy Aristyanova',
+        'Figur Ahmad Brilian',
+        'Farida Amani',
+        'Yoga Andika Hanryant Pratama',
+        'Ahmad Rizky Fuady',
+        'Daffa Chandra Himawan',
+        'Sabrina Qurrotul\'ain Dakhan',
+        'Pinkan Nuraini',
+      ],
+    },
+    {
+      hari: 'Kamis',
+      koordinator: ['Vivia Ayu Maharani', 'Naura Shifa Putri Sofiani'],
+      anggota: [
+        'Muhammad Kafi Najamul Daim',
+        'Febriani Sekar Cikal',
+        'Muh. Naufal Aulia Darojat',
+        'Arya Firmansyah',
+        'Yasinta Widia Anjati',
+        'Aulia Annisa Musdhalifah',
+        'Abdullah Tsaqif Imtiyazi',
+      ],
+    },
+    {
+      hari: 'Jumat',
+      koordinator: ['Muhamad Amarrudin Khan', 'Calista Putri Fatimaheswari'],
+      anggota: [
+        'Muh. Faris Abid Muwaffaq',
+        'Khalda Syifa Nida',
+        'Nisa Hidayanti Putri',
+        'Alya Nabila',
+        'Nisa Fadhilah Purnomo',
+        'Firda Hayyuning Nusa',
+        'Rangga Budi Hartono',
+      ],
+    },
+  ];
 
-  for (let i = 0; i < kementerianList.length; i++) {
-    const hari = hariList[i % hariList.length];
-    await prisma.jadwalPiket.upsert({
-      where: {
-        kementerianId_hari: {
-          kementerianId: kementerianList[i].id,
-          hari: hari,
-        },
-      },
-      update: {},
-      create: {
-        kementerianId: kementerianList[i].id,
-        hari: hari,
-      },
-    });
+  await prisma.jadwalPiket.deleteMany(); // Reset jadwal
+  
+  for (const j of jadwal) {
+    const allNames = [...j.koordinator, ...j.anggota];
+    
+    for (const name of allNames) {
+      const isKoord = j.koordinator.includes(name);
+      
+      const dbAnggota = await prisma.anggota.findFirst({
+        where: { namaLengkap: name },
+      });
+      
+      if (dbAnggota) {
+        await prisma.jadwalPiket.create({
+          data: {
+            anggotaId: dbAnggota.id,
+            hari: j.hari,
+            isKoordinator: isKoord,
+          },
+        });
+      } else {
+        console.warn(`Anggota tidak ditemukan untuk jadwal: ${name}`);
+      }
+    }
   }
 
   console.log('Seed selesai!');
