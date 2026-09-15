@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import Navbar from '@/components/Navbar';
-import { ClipboardCheck, Shield, Users, Calendar, ArrowRight, CalendarDays } from 'lucide-react';
+import { ClipboardCheck, Shield, Users, Calendar, ArrowRight, CalendarDays, QrCode } from 'lucide-react';
 
 export default function Home() {
   return (
