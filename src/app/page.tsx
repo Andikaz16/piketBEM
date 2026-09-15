@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import Navbar from '@/components/Navbar';
-import { ClipboardCheck, QrCode, Shield, Users, Calendar, ArrowRight } from 'lucide-react';
+import { ClipboardCheck, Shield, Users, Calendar, ArrowRight, CalendarDays } from 'lucide-react';
 
 export default function Home() {
   return (
@@ -31,6 +31,13 @@ export default function Home() {
                 >
                   Mulai Absen
                   <ArrowRight className="h-5 w-5" />
+                </Link>
+                <Link
+                  href="/jadwal"
+                  className="inline-flex items-center justify-center gap-2 bg-white text-gray-700 px-8 py-3 rounded-xl text-lg font-semibold border-2 border-gray-200 hover:border-blue-300 hover:text-blue-600 transition-colors"
+                >
+                  <CalendarDays className="h-5 w-5" />
+                  Lihat Jadwal
                 </Link>
               </div>
             </div>

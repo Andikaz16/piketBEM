@@ -22,6 +22,9 @@ export default function Navbar() {
             <Link href="/" className="text-gray-600 hover:text-blue-600 transition-colors font-medium">
               Beranda
             </Link>
+            <Link href="/jadwal" className="text-gray-600 hover:text-blue-600 transition-colors font-medium">
+              Jadwal
+            </Link>
             <Link href="/absen" className="text-gray-600 hover:text-blue-600 transition-colors font-medium">
               Absen
             </Link>
@@ -53,6 +56,13 @@ export default function Navbar() {
               onClick={() => setIsOpen(false)}
             >
               Beranda
+            </Link>
+            <Link
+              href="/jadwal"
+              className="block px-3 py-2 rounded-lg text-gray-600 hover:bg-gray-50 hover:text-blue-600 font-medium"
+              onClick={() => setIsOpen(false)}
+            >
+              Jadwal
             </Link>
             <Link
               href="/absen"
