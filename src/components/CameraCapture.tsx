@@ -1,7 +1,7 @@
 'use client';
 
 import { useRef, useState, useCallback } from 'react';
-import { Camera, RotateCcw, Check } from 'lucide-react';
+import { Camera, RotateCcw, Check, Upload } from 'lucide-react';
 
 interface CameraCaptureProps {
   label: string;
@@ -13,7 +13,7 @@ function compressImage(file: File, maxWidth = 800, quality = 0.6): Promise<File>
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
     reader.onload = (e) => {
-      const img = new Image();
+      const img = new window.Image();
       img.onload = () => {
         const canvas = document.createElement('canvas');
         let width = img.width;
@@ -61,7 +61,8 @@ function compressImage(file: File, maxWidth = 800, quality = 0.6): Promise<File>
 }
 
 export default function CameraCapture({ label, onCapture }: CameraCaptureProps) {
-  const fileInputRef = useRef<HTMLInputElement>(null);
+  const cameraInputRef = useRef<HTMLInputElement>(null);
+  const galleryInputRef = useRef<HTMLInputElement>(null);
   const [preview, setPreview] = useState<string | null>(null);
   const [compressing, setCompressing] = useState(false);
 
@@ -98,9 +99,8 @@ export default function CameraCapture({ label, onCapture }: CameraCaptureProps) 
 
   const handleReset = () => {
     setPreview(null);
-    if (fileInputRef.current) {
-      fileInputRef.current.value = '';
-    }
+    if (cameraInputRef.current) cameraInputRef.current.value = '';
+    if (galleryInputRef.current) galleryInputRef.current.value = '';
   };
 
   return (
@@ -129,11 +129,10 @@ export default function CameraCapture({ label, onCapture }: CameraCaptureProps) 
         </div>
       ) : (
         <div
-          onClick={() => !compressing && fileInputRef.current?.click()}
-          className={`w-full h-48 border-2 border-dashed rounded-xl flex flex-col items-center justify-center cursor-pointer transition-all group ${
+          className={`w-full p-4 border-2 border-dashed rounded-xl flex flex-col items-center justify-center transition-all ${
             compressing 
-              ? 'border-yellow-500/40 bg-yellow-500/5' 
-              : 'border-white/20 hover:border-red-500 hover:bg-red-500/5'
+              ? 'border-yellow-500/40 bg-yellow-500/5 h-48' 
+              : 'border-white/20'
           }`}
         >
           {compressing ? (
@@ -142,20 +141,40 @@ export default function CameraCapture({ label, onCapture }: CameraCaptureProps) 
               <span className="text-sm font-medium text-yellow-300">Mengompres foto...</span>
             </>
           ) : (
-            <>
-              <Camera className="h-10 w-10 text-gray-500 mb-3 group-hover:text-red-400 transition-colors" />
-              <span className="text-sm font-medium text-gray-400 group-hover:text-gray-300">Ketuk untuk mengambil foto</span>
-              <span className="text-xs text-gray-500 mt-1">atau pilih dari galeri</span>
-            </>
+            <div className="flex flex-col sm:flex-row gap-3 w-full">
+              <button
+                type="button"
+                onClick={() => cameraInputRef.current?.click()}
+                className="flex-1 flex flex-col items-center justify-center p-4 rounded-xl border border-white/5 bg-white/5 hover:border-red-500/50 hover:bg-red-500/10 transition-colors group"
+              >
+                <Camera className="h-8 w-8 text-gray-400 mb-2 group-hover:text-red-400 transition-colors" />
+                <span className="text-xs font-medium text-gray-300 group-hover:text-white">Kamera</span>
+              </button>
+              <button
+                type="button"
+                onClick={() => galleryInputRef.current?.click()}
+                className="flex-1 flex flex-col items-center justify-center p-4 rounded-xl border border-white/5 bg-white/5 hover:border-red-500/50 hover:bg-red-500/10 transition-colors group"
+              >
+                <Upload className="h-8 w-8 text-gray-400 mb-2 group-hover:text-red-400 transition-colors" />
+                <span className="text-xs font-medium text-gray-300 group-hover:text-white">Galeri</span>
+              </button>
+            </div>
           )}
         </div>
       )}
 
       <input
-        ref={fileInputRef}
+        ref={cameraInputRef}
         type="file"
         accept="image/*"
         capture="environment"
+        onChange={handleFileChange}
+        className="hidden"
+      />
+      <input
+        ref={galleryInputRef}
+        type="file"
+        accept="image/*"
         onChange={handleFileChange}
         className="hidden"
       />
