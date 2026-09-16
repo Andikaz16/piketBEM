@@ -1,12 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { writeFile, mkdir } from 'fs/promises';
-import path from 'path';
 
 export async function POST(request: NextRequest) {
   try {
     const formData = await request.formData();
     const file = formData.get('file') as File;
-    const type = formData.get('type') as string;
 
     if (!file) {
       return NextResponse.json(
@@ -32,26 +29,13 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    // Convert file to base64 data URL
     const bytes = await file.arrayBuffer();
     const buffer = Buffer.from(bytes);
+    const base64 = buffer.toString('base64');
+    const dataUrl = `data:${file.type};base64,${base64}`;
 
-    // Create upload directory if it doesn't exist
-    const uploadDir = path.join(process.cwd(), 'public', 'uploads', type || 'general');
-    await mkdir(uploadDir, { recursive: true });
-
-    // Generate unique filename
-    const timestamp = Date.now();
-    const randomStr = Math.random().toString(36).substring(2, 8);
-    const ext = file.name.split('.').pop();
-    const fileName = `${timestamp}-${randomStr}.${ext}`;
-    const filePath = path.join(uploadDir, fileName);
-
-    await writeFile(filePath, buffer);
-
-    // Return the public URL path
-    const publicPath = `/uploads/${type || 'general'}/${fileName}`;
-
-    return NextResponse.json({ url: publicPath }, { status: 201 });
+    return NextResponse.json({ url: dataUrl }, { status: 201 });
   } catch (error) {
     console.error('Error uploading file:', error);
     return NextResponse.json(
