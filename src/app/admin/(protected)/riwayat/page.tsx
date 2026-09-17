@@ -47,6 +47,12 @@ export default function RiwayatPage() {
     title: '',
   });
 
+  const [keteranganModal, setKeteranganModal] = useState<{ isOpen: boolean; text: string; nama: string }>({
+    isOpen: false,
+    text: '',
+    nama: '',
+  });
+
   useEffect(() => {
     fetch('/api/kementerian')
       .then((r) => r.json())
@@ -182,8 +188,20 @@ export default function RiwayatPage() {
                         {item.jamMasuk}
                       </span>
                     </td>
-                    <td className="px-4 py-3 text-sm text-gray-500 max-w-[200px] truncate">
-                      {item.keterangan || '-'}
+                    <td className="px-4 py-3 text-sm text-gray-500 max-w-[200px]">
+                      {item.keterangan ? (
+                        <div className="flex items-center gap-2">
+                          <span className="truncate flex-1">{item.keterangan}</span>
+                          <button
+                            onClick={() => setKeteranganModal({ isOpen: true, text: item.keterangan!, nama: item.anggota.namaLengkap })}
+                            className="text-[10px] text-red-400 hover:text-red-300 font-bold uppercase tracking-wider whitespace-nowrap bg-red-400/10 hover:bg-red-400/20 px-2.5 py-1 rounded-md transition-colors"
+                          >
+                            Baca
+                          </button>
+                        </div>
+                      ) : (
+                        '-'
+                      )}
                     </td>
                     <td className="px-4 py-3">
                       <div className="flex gap-2">
@@ -221,6 +239,25 @@ export default function RiwayatPage() {
           </div>
         )}
       </div>
+
+      {/* Keterangan Modal */}
+      {keteranganModal.isOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
+          <div className="bg-slate-950 border border-white/10 p-6 rounded-2xl max-w-md w-full shadow-2xl animate-scale-in">
+            <h3 className="text-xl font-heading font-bold text-white mb-1 uppercase tracking-wide">Detail Keterangan</h3>
+            <p className="text-xs text-red-400 font-bold uppercase tracking-wider mb-5 pb-4 border-b border-white/10">{keteranganModal.nama}</p>
+            <div className="bg-white/5 p-4 rounded-xl text-gray-300 text-sm whitespace-pre-wrap leading-relaxed max-h-[50vh] overflow-y-auto">
+              {keteranganModal.text}
+            </div>
+            <button
+              onClick={() => setKeteranganModal({ ...keteranganModal, isOpen: false })}
+              className="mt-6 w-full bg-red-600 text-white py-3 rounded-xl font-bold uppercase tracking-wider hover:bg-red-700 transition-colors"
+            >
+              Tutup
+            </button>
+          </div>
+        </div>
+      )}
 
       {/* Photo Modal */}
       <PhotoModal
