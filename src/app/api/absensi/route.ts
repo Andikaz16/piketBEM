@@ -14,10 +14,9 @@ export async function GET(request: Request) {
     let where: any = {};
 
     if (tanggal) {
-      const startOfDay = new Date(tanggal);
-      startOfDay.setHours(0, 0, 0, 0);
-      const endOfDay = new Date(tanggal);
-      endOfDay.setHours(23, 59, 59, 999);
+      // Set boundaries in WIB (UTC+7)
+      const startOfDay = new Date(`${tanggal}T00:00:00.000+07:00`);
+      const endOfDay = new Date(`${tanggal}T23:59:59.999+07:00`);
       where.tanggal = {
         gte: startOfDay,
         lte: endOfDay,
@@ -25,8 +24,10 @@ export async function GET(request: Request) {
     }
 
     if (bulan && tahun) {
-      const startOfMonth = new Date(parseInt(tahun), parseInt(bulan) - 1, 1);
-      const endOfMonth = new Date(parseInt(tahun), parseInt(bulan), 0, 23, 59, 59, 999);
+      const paddedBulan = bulan.padStart(2, '0');
+      const daysInMonth = new Date(parseInt(tahun), parseInt(bulan), 0).getDate();
+      const startOfMonth = new Date(`${tahun}-${paddedBulan}-01T00:00:00.000+07:00`);
+      const endOfMonth = new Date(`${tahun}-${paddedBulan}-${daysInMonth}T23:59:59.999+07:00`);
       where.tanggal = {
         gte: startOfMonth,
         lte: endOfMonth,
@@ -76,18 +77,20 @@ export async function POST(request: Request) {
     }
 
     const now = new Date();
+    
+    // Explicitly set timezone to Indonesia/Jakarta (WIB)
     const jamMasuk = now.toLocaleTimeString('id-ID', {
+      timeZone: 'Asia/Jakarta',
       hour: '2-digit',
       minute: '2-digit',
       second: '2-digit',
       hour12: false,
     });
 
-    // Check if already absent today
-    const startOfDay = new Date();
-    startOfDay.setHours(0, 0, 0, 0);
-    const endOfDay = new Date();
-    endOfDay.setHours(23, 59, 59, 999);
+    // Check if already absent today (in WIB)
+    const wibDateString = now.toLocaleDateString('en-CA', { timeZone: 'Asia/Jakarta' }); // Output: YYYY-MM-DD
+    const startOfDay = new Date(`${wibDateString}T00:00:00.000+07:00`);
+    const endOfDay = new Date(`${wibDateString}T23:59:59.999+07:00`);
 
     const existing = await prisma.absensi.findFirst({
       where: {
